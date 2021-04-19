@@ -1,6 +1,6 @@
 ---
 home: true
-# heroImage: /logo.png
+heroImage: /avatar.png
 # actionText: 介绍 →
 # actionLink: /blog/
 features:
