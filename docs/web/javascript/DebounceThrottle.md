@@ -1,7 +1,56 @@
 # 防抖/节流
 
-### 防抖
-所谓防抖，就是指触发事件后在 n 秒内函数只能执行一次，如果在 n 秒内又触发了事件，则会重新计算函数执行时间。
+### 防抖（debounce）
+所谓防抖，就是指触发事件后在 n 秒内函数只能执行一次，如果在 n 秒内又触发了事件，则会重新计算函数执行时间。  
+及短时间内多次触发同一事件，只执行最后一次，或者只执行最开始的一次，中间的不执行。
+
+以下为执行最后一次触发，且非立即执行版：
+```javascript
+/**
+ * @desc 非立即执行版
+ * @param func 函数 
+ * @param wait 延迟执行毫秒数
+ */
+function debounce(func,wait){
+  let timer
+  return function(){
+    let _this = this
+    let args = arguments
+
+    if(timer) clearTimeout(timer)
+
+    timer = setTimeout(()=>{
+      func.apply(_this,args)
+    },wait)
+  }
+}
+```
+
+以下为执行最开始的一次触发，且立即执行版：
+```javascript
+/**
+ * @desc 立即执行版
+ * @param func 函数 
+ * @param wait 延迟执行毫秒数
+ */
+function debounce(func,wait){
+  let timer
+  return function(){
+    let _this = this
+    let args = arguments
+
+    if(timer) clearTimeout(timer)
+
+    let flag = !timer
+    timer = setTimeout(()=>{
+      timer = null
+    },wait)
+
+    if(flag) func.apply(_this,args)
+  }
+}
+```
+最后合并为以下版本：
 ```javascript
 /**
  * @desc 函数防抖
@@ -16,13 +65,15 @@ function debounce(func, wait = 300, immediate = true) {
     let context = this
     if (timer) clearTimeout(timer)
 
-    if (immediate && !timer) {
-      timer = setTimeout(null, wait)
-      func.apply(context, args)
+    if (immediate ) {
+      let flag = !timer
+      timer = setTimeout(()=>{
+        timer = null
+      }, wait)
+      if(flag) func.apply(context, args)
     } else {
       timer = setTimeout(() => {
         func.apply(context, args)
-        timer = null
       }, wait)
     }
   }
@@ -33,8 +84,8 @@ function debounce(func, wait = 300, immediate = true) {
   return _debounce
 }
 ```
-### 节流
-所谓节流，就是指连续触发事件但是在 n 秒中只执行一次函数。  
+### 节流（throttle）
+所谓节流，就是指连续触发事件但是在 n 秒中只执行一次函数。即2n秒内执行2次...... 。如字面意思，节流作用是稀释函数的的执行频率。
 函数节流 时间戳版（函数会立即执行）
 ```javascript
 /**
@@ -47,7 +98,7 @@ function throttleByTimestamp(func, wait = 300) {
   const _throttle = function () {
     let args = arguments
     let context = this
-    let now = Data.now()
+    let now = Date.now()
     if (now - previous > wait) {
       func.apply(context, args)
       previous = now
@@ -87,13 +138,13 @@ function throttleByTimer(func, wait = 300) {
  * @param immediate 是否立即执行，true 表立即执行，false 表非立即执行
  */
 function throttle(func, wait = 300, immediate = true) {
-  let previous = new Data(0).getTime()
+  let previous = new Date(0).getTime()
   let timer
   const _throttle = function () {
     let args = arguments
     let context = this
     if (immediate) {
-      let now = new Data().getTime()
+      let now = new Date().getTime()
       if (now - previous > wait) {
         func.apply(context, args)
         previous = now

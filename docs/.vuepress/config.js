@@ -40,6 +40,7 @@ module.exports = {
         '/web/javascript/ArrayEvent.md',
         '/web/javascript/Currying.md',
         '/web/javascript/DebounceThrottle.md',
+        '/web/javascript/DesignPatterns.md',
       ],
       '/server/nginx/':[
         '/server/nginx/install.md',
