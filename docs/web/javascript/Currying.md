@@ -2,14 +2,11 @@
   在数学和计算机科学中，柯里化是一种将使用多个参数的一个函数转换成一系列使用一个参数的函数的技术。
 
 ### 三大作用
-  1、参数复用
-  2、提前确认
-  3、延迟运行
-
-
+  1、参数复用  
+  2、提前确认  
+  3、延迟运行  
 #### 1、参数复用
-利用闭包的原理，让我们前面传输过来的参数不要被释放掉。
-
+利用闭包的原理，让我们前面传输过来的参数不要被释放掉。  
 例：如何实现add(2)(3) = 5
 ``` javascript
 // 普通函数
@@ -50,7 +47,6 @@ console.log(add(2)(3)(4))
 
 #### 2、提前确认
 避免重复去判断某一条件是否符合，不符合则return 不再继续执行下面的操作
-
 ```javascript
 // 普通函数
 let on = function(element,event,handler){
@@ -86,7 +82,6 @@ let curryingOn = (function(){
 
 #### 3、延迟执行
  避免重复的去执行程序，等真正需要结果的时候再执行（js中的bind这个方法，用到的就是这个特征）
-
 ```javascript
 Function.prototype.bind = function (context) {
   var _this = this
@@ -102,30 +97,9 @@ Function.prototype.bind = function (context) {
 
 #### 4、通用的封装方法
 
-初步封装（只能多扩展一个参数）
-
-```javascript
-// 初步封装（只能多扩展一个参数）
-var currying = function (fn) {
-  // args
-  var args = Array.prototype.slice.call(arguments, 1)
-  return function () {
-    // 将后面方法里的全部参数和args合并
-    var newArgs = args.concat(Array.prototype.slice.call(arguments))
-    return fn.apply(this, newArgs)
-  }
-}
-function add(a,b){
-  return a+b
-}
-
-let curryAdd=currying(add)
-console.log(curryAdd(2)(3)(4)(5))
-
-```
 添加递归在进行封装__支持多参数传递
 ```javascript
-function progressCurrying(fn, args) {
+function currying(fn, args) {
   var _this = this
   var len = fn.length
   var _args = args || []
@@ -136,12 +110,19 @@ function progressCurrying(fn, args) {
     args = Array.prototype.concat.call(_args, args)
     // 如果参数个数小于最初的fn.length,则递归调用，继续手机参数
     if (args.length < len) {
-      return progressCurrying(_this, fn, args)
+      return currying.call(_this, fn, args)
     }
     // 参数收集完毕。则执行fn
     return fn.apply(this, args)
   }
 }
+function myAdd(a,b,c){
+  return a+b+c
+}
+
+let myCurry = currying(myAdd)
+console.log(myCurry(2)(3)(4))
+
 ```
 #### 5、经典面试题
 实现一个add方法，使计算结果能够满足一下预期  
