@@ -32,6 +32,11 @@ module.exports = {
           { text: 'Nginx', link: '/server/nginx/' }, 
         ] 
       },
+      { 
+        text: 'Demo', items: [
+          { text: 'kr-print-designer', link: '/demo/kr-print-designer/index.html', target:'_blank' }, 
+        ] 
+      },
       { text: 'Github', link: 'https://github.com/myliuxia' }
     ],
     sidebar: {
