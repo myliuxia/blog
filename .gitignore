@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 docs/.vuepress/dist
+blog/.vuepress/dist
 
 # Log files
 npm-debug.log*
