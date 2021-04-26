@@ -4,7 +4,7 @@ module.exports = {
   serviceWorker: true, // 是否开启 PWA 
   base: '/', // 这是部署到github相关的配置
  
-  theme: 'vdoing', // 使用依赖包主题
+  theme: require.resolve('../../vuepress-theme-lx'), // 使用依赖包主题
   themeConfig: {
     nav: [
       {text: '首页', link: '/'},

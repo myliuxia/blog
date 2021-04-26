@@ -1,7 +1,6 @@
 ---
 title: Nginx 安装
 date: 2021-04-23 14:04:56
-permalink: /pages/3983eb/
 categories: 
   - 技术
 tags: 

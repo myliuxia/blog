@@ -1,7 +1,6 @@
 ---
 title: Array 常用方法总结
 date: 2021-04-23 14:04:56
-permalink: /pages/bc49a5/
 categories: 
   - 技术
 tags: 
