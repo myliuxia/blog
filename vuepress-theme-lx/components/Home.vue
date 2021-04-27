@@ -1,28 +1,36 @@
 <template>
   <div class="theme-main__inner home">
-    <PostList/>
-    <!-- <Pagination v-if="$site.pages.length > 1"/> -->
+    <div class="article-list">
+      <div class="article-item" v-for="item in $pagination.pages" :key="item">
+        <div v-if="item.frontmatter.cover" class="article-cover">
+          <router-link :to="item.path">
+            <img :src="item.frontmatter.cover" alt="cover"/>
+            <ThemePalette/>
+          </router-link>
+        </div>
+        <h3 class="article-title">
+          <router-link :to="item.path">{{item.title}}</router-link>
+        </h3>
+        <div class="article-desc" v-html="item.excerpt"></div>
+        <footer class="article-meta">
+          <span><i class="icon-calendar"></i>{{formateDate(item.frontmatter.date)}}</span>
+        </footer>
+      </div>
+    </div>
+    <Pagination v-if="$pagination.length > 1"/>
   </div>
 </template>
 <script>
 import { Pagination } from '@vuepress/plugin-blog/lib/client/components';
 import dayjs from 'dayjs'
 import dayjsPluginUTC from 'dayjs/plugin/utc'
-import PostList from './PostList.vue'
 
 dayjs.extend(dayjsPluginUTC)
 const DATE_MAP = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 export default {
   name: 'Home',
   components: {
-    // Pagination,
-    PostList
-  },
-  data(){
-    return {
-      perPage: 10, // 每页长
-      currentPage: 1// 当前页
-    }
+    Pagination
   },
   methods: {
     formateDate(val) {

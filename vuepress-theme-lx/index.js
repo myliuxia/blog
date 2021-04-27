@@ -70,7 +70,7 @@ module.exports = (options, {themeConfig}) => {
       directories: [
         {
           id: 'post',
-          dirname: '_post',
+          dirname: '_posts',
           path: '/',
           itemPermalink: '/post/:year/:month/:day/:slug.html',
           pagination: {
