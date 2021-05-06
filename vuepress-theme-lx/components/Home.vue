@@ -1,7 +1,7 @@
 <template>
   <div class="theme-main__inner home">
     <div class="article-list">
-      <div class="article-item" v-for="item in $pagination.pages" :key="item">
+      <div class="article-item" v-for="item in $pagination.pages" :key="item.path">
         <div v-if="item.frontmatter.cover" class="article-cover">
           <router-link :to="item.path">
             <img :src="item.frontmatter.cover" alt="cover"/>

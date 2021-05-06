@@ -7,6 +7,8 @@ tags:
   - JavaScript
 sidebar: auto
 ---
+>javascript中Array对象常用的方法，如:join、push、pop、shift、unShift、sort等
+<!-- more -->
 # Array 常用方法总结
 
 ### 1、创建数组

@@ -8,6 +8,8 @@ tags:
   - 服务器 
 sidebar: auto
 ---
+>背景：使用Windows PowerShell连接服务器，安装Ngnix
+<!-- more -->
 # Nginx 安装
 
 背景：使用Windows PowerShell连接服务器，安装Ngnix

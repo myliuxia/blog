@@ -73,8 +73,9 @@ module.exports = (options, {themeConfig}) => {
           dirname: '_posts',
           path: '/',
           itemPermalink: '/post/:year/:month/:day/:slug.html',
+          frontmatter: { title: '' },
           pagination: {
-            perPagePosts: 10,
+            lengthPerPage: 5,
             prevText: '',
             nextText: ''
           }

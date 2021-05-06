@@ -7,6 +7,8 @@ tags:
   - JavaScript
 sidebar: auto
 ---
+>javascript中String对象常用的方法，如:substring、substr、charAt 、charCodeAt、indexOf、lastIndexOf等
+<!-- more -->
 # String常用方法总结
 ### 1、substring 和 substr
 substring(start,end): start开始位置的索引,end结束位置索引, 截取后不改变原来字符串，返回一个新的字符串。且不改变原字符串。
