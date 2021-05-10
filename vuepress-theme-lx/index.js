@@ -75,7 +75,7 @@ module.exports = (options, {themeConfig}) => {
           itemPermalink: '/post/:year/:month/:day/:slug.html',
           frontmatter: { title: '' },
           pagination: {
-            lengthPerPage: 5,
+            lengthPerPage: 10,
             prevText: '',
             nextText: ''
           }
@@ -103,6 +103,12 @@ module.exports = (options, {themeConfig}) => {
             prevText: '',
             nextText: ''
           }
+        },
+        {
+          id: "archives",
+          keys: ['archive', 'archives'],
+          path: '/archives/',
+          frontmatter: { title: 'Archive' },
         }
       ]
     }],

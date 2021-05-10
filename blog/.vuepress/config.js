@@ -6,6 +6,8 @@ module.exports = {
  
   theme: require.resolve('../../vuepress-theme-lx'), // 使用依赖包主题
   themeConfig: {
+    
+    logo: '/avatar.png',
     nav: [
       {text: '首页', link: '/'},
       {text: '分类', link: '/categories/'},
