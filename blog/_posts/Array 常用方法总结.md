@@ -6,6 +6,10 @@ categories:
 tags: 
   - JavaScript
 sidebar: auto
+author: 
+  name: liuxia
+  link: https://github.com/myliuxia
+permalink: /pages/1ed60d/
 ---
 >javascript中Array对象常用的方法，如:join、push、pop、shift、unShift、sort等
 <!-- more -->

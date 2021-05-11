@@ -8,8 +8,8 @@
       itemscope
     >
       <i class="icon-author"></i> 
-      <span itemprop="name">{{ author }}</span>
-      <span v-if="location" itemprop="address"> &nbsp; in {{ location }}</span>
+      <a v-if="author.link" :href="author.link" target="_blank">{{ author.name }}</a>
+      <span v-else itemprop="name">{{ author.name }}</span>
     </div>
     <div v-if="date" class="post-meta__date">
       <i class="icon-calendar"></i> 
@@ -22,10 +22,6 @@
       <router-link :to="item.path">
         {{ item.name}}
       </router-link>
-    </div>
-    <div class="post-meta__reading">
-      <i class="icon-time"></i>
-      {{$page.wordCount}} words in {{$page.readingTime}} min
     </div>
     <div :id="pagePath" v-if="isShowReadCount" class="leancloud_visitors" data-flag-title="Your Article Title">
         <i class="icon-eye"></i>
@@ -44,7 +40,7 @@ export default {
   name: 'PostMeta',
   props: {
     author: {
-      type: String,
+      type: Object,
     },
     date: {
       type: String,

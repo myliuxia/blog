@@ -6,6 +6,10 @@ categories:
 tags: 
   - JavaScript
 sidebar: auto
+author: 
+  name: liuxia
+  link: https://github.com/myliuxia
+permalink: /pages/1e17ab/
 ---
 >javascript中String对象常用的方法，如:substring、substr、charAt 、charCodeAt、indexOf、lastIndexOf等
 <!-- more -->

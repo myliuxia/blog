@@ -13,11 +13,14 @@
   "devDependencies": {
     "@vuepress/plugin-pwa": "^1.8.2",
     "@vuepress/theme-blog": "^2.3.3",
+    "inquirer": "^7.1.0",
+    "json2yaml": "^1.1.0",
     "valine": "^1.4.14",
     "vuepress": "^1.8.2",
     "vuepress-plugin-one-click-copy": "^1.0.3",
     "vuepress-plugin-seo": "^0.1.4",
-    "vuepress-theme-vdoing": "^1.8.1"
+    "vuepress-theme-vdoing": "^1.8.1",
+    "yamljs": "^0.3.0"
   },
   "dependencies": {
     "vuepress-plugin-comment": "^0.7.3"

@@ -21,7 +21,6 @@ module.exports = (options = {}, context) => ({
   name: 'maker-theme-utils',
   extendPageData($page) {
     $page.hostname = context.themeConfig.hostname;
-    console.log($page.path)
     if ($page.path === '/archives/') {
       return $page.pageType = 'archive';
     } else if ($page.path === '/categories/') {
@@ -34,9 +33,7 @@ module.exports = (options = {}, context) => ({
       return $page.pageType = 'tagItem';
     } else if ($page.path === '/' || $page.path.startsWith('/page/')) {
       return $page.pageType = 'home';
-    } else if ($page.path === '/friend-links/') {
-      return $page.pageType = 'friendLink';
-    }
+    } 
     if ($page.pid === 'post') {
       const { _strippedContent } = $page;
       let content = _strippedContent.replace(/\s/g, '');

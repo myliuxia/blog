@@ -1,5 +1,10 @@
 const path = require('path')
-module.exports = (options, {themeConfig}) => {
+const setFrontmatter = require('./node_utils/setFrontmatter')
+module.exports = (options, {sourceDir,themeConfig}) => {
+  
+  // 自动设置front matter
+  setFrontmatter(sourceDir, themeConfig)
+
   /**
    * Default theme configuration
    */
@@ -12,14 +17,6 @@ module.exports = (options, {themeConfig}) => {
     social: themeConfig.social || [],
     reward: themeConfig.reward || {},
     dateFormat: themeConfig.dateFormat || 'YYYY-MM-DD',
-    
-    comment: {
-      service: 'vssue',
-      owner: '80maker',
-      repo: '80maker.github.io',
-      clientId: 'Iv1.57b5c522319529f6',
-      clientSecret: '7ad0e3d1455a2d6425c813b37a0526e9bd820657',
-    }
   })
 
   const plugins = [
@@ -59,8 +56,6 @@ module.exports = (options, {themeConfig}) => {
     }],
     ['@vuepress/medium-zoom', {
       selector: '.article-content img',
-      // medium-zoom options here
-      // See: https://github.com/francoischalifour/medium-zoom#options
       options: {
         margin: 16,
         background: "#FF0000",
@@ -72,8 +67,7 @@ module.exports = (options, {themeConfig}) => {
           id: 'post',
           dirname: '_posts',
           path: '/',
-          itemPermalink: '/post/:year/:month/:day/:slug.html',
-          frontmatter: { title: '' },
+          frontmatter: { title: '首页',home:true },
           pagination: {
             lengthPerPage: 10,
             prevText: '',
@@ -86,23 +80,15 @@ module.exports = (options, {themeConfig}) => {
           id: "tag",
           keys: ['tag', 'tags'],
           path: '/tags/',
-          frontmatter: { title: 'Tag' },
-          pagination: {
-            lengthPerPage: 10,
-            prevText: '',
-            nextText: ''
-          }
+          title: '标签',
+          frontmatter: { title: '标签',tagsPage: true },
         },
         {
           id: "category",
           keys: ['category', 'categories'],
           path: '/categories/',
-          frontmatter: { title: 'Category' },
-          pagination: {
-            lengthPerPage: 10,
-            prevText: '',
-            nextText: ''
-          }
+          title: '分类',
+          frontmatter: { title: '分类',categoriesPage: true },
         },
         {
           id: "archives",

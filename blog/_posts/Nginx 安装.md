@@ -5,8 +5,12 @@ categories:
   - 技术
 tags: 
   - Nginx
-  - 服务器 
+  - 服务器
 sidebar: auto
+author: 
+  name: liuxia
+  link: https://github.com/myliuxia
+permalink: /pages/23716a/
 ---
 >背景：使用Windows PowerShell连接服务器，安装Ngnix
 <!-- more -->
