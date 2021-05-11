@@ -21,15 +21,16 @@ module.exports = (options = {}, context) => ({
   name: 'maker-theme-utils',
   extendPageData($page) {
     $page.hostname = context.themeConfig.hostname;
+    console.log($page.path)
     if ($page.path === '/archives/') {
       return $page.pageType = 'archive';
     } else if ($page.path === '/categories/') {
       return $page.pageType = 'category';
-    } else if (/^\/categories\/\w/.test($page.path)) {
+    } else if (/^\/categories\/[\u4e00-\u9fa5_a-zA-Z0-9]/.test(decodeURI($page.path))) {
       return $page.pageType = 'categoryItem';
     } else if ($page.path === '/tags/') {
       return $page.pageType = 'tag';
-    } else if (/^\/tags\/\w/.test($page.path)) {
+    } else if (/^\/tags\/[\u4e00-\u9fa5_a-zA-Z0-9]/.test(decodeURI($page.path))) {
       return $page.pageType = 'tagItem';
     } else if ($page.path === '/' || $page.path.startsWith('/page/')) {
       return $page.pageType = 'home';

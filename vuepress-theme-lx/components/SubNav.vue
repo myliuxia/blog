@@ -2,15 +2,15 @@
     <div class="theme-SubNav">
       <RouterLink class="theme-SubNav__item" :class="{'theme-SubNav__item--active': $page.pageType === 'archive'}" to="/archives/">
         <span class="theme-SubNav__count">{{archivesCount}}</span>
-        <span class="theme-SubNav__name">Archives</span>
+        <span class="theme-SubNav__name">归档</span>
       </RouterLink>
       <RouterLink class="theme-SubNav__item" :class="{'theme-SubNav__item--active': ['category', 'categoryItem'].includes($page.pageType)}" to="/categories/">
         <span class="theme-SubNav__count">{{$category.length}}</span>
-        <span class="theme-SubNav__name">Categories</span>
+        <span class="theme-SubNav__name">分类</span>
       </RouterLink>
       <RouterLink class="theme-SubNav__item" :class="{'theme-SubNav__item--active': ['tag', 'tagItem'].includes($page.pageType)}" to="/tags/">
         <span class="theme-SubNav__count">{{$tag.length}}</span>
-        <span class="theme-SubNav__name">Tags</span>
+        <span class="theme-SubNav__name">标签</span>
       </RouterLink>
     </div>
 </template>
