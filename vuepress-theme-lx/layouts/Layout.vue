@@ -20,7 +20,6 @@
     </div>
     <SvgSprite/>
     
-    <BodyBgImg v-if="$themeConfig.bodyBgImg" />
   </div>
 </template>
 
@@ -35,7 +34,6 @@ import Post from '@theme/components/Post.vue'
 import FriendLink from '@theme/components/FriendLink.vue'
 import SideBar from '@theme/components/SideBar.vue'
 import SvgSprite from '@theme/components/SvgSprite.vue'
-import BodyBgImg from '@theme/components/BodyBgImg.vue'
 
 import { resolveSidebarItems } from '../util'
 export default {
@@ -51,7 +49,6 @@ export default {
     SideBar,
     FriendLink,
     SvgSprite,
-    BodyBgImg
   },
   data () {
     return {

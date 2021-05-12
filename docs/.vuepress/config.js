@@ -3,55 +3,44 @@ module.exports = {
   description: '刘夏的个人博客',
   serviceWorker: true, // 是否开启 PWA 
   base: '/', // 这是部署到github相关的配置
-  markdown: {
-      lineNumbers: true // 代码块显示行号
-  },
+ 
+  theme: require.resolve('../../vuepress-theme-lx'), // 使用依赖包主题
   themeConfig: {
-    nav: [
-      { text: '主页', link: '/' },
-      {
-        text: 'WEB前端', items: [
-          { text: 'HTML', link: '/web/html/' },
-          { text: 'CSS', link: '/web/css/' },
-          { text: 'JavaScript', link: '/web/javascript/' },
-          { text: 'TypeScript', link: '/web/typescript/' },
-          { text: 'Vue', link: '/web/vue/' }
-        ]
-      },
-      {
-        text: '前端工程化', items: [
-          { text: 'Git', link: '/project/git/' },
-          { text: 'Scss', link: '/project/scss/' },
-          { text: 'WebPack', link: '/project/webpack/' }, 
-        ]
-      },
-      { 
-        text: '服务端', items: [
-          { text: 'Java', link: '/server/java/' },
-          { text: 'MongoDB', link: '/server/mongodb/' },
-          { text: 'Nginx', link: '/server/nginx/' }, 
-        ] 
-      },
-      { 
-        text: 'Demo', items: [
-          { text: 'kr-print-designer', link: '/demo/kr-print-designer/index.html', target:'_blank' }, 
-        ] 
-      },
-      { text: 'Github', link: 'https://github.com/myliuxia' }
-    ],
-    sidebar: {
-      '/web/javascript/':[
-        '/web/javascript/StringEvent.md',
-        '/web/javascript/ArrayEvent.md',
-        '/web/javascript/Currying.md',
-        '/web/javascript/DebounceThrottle.md',
-        '/web/javascript/DesignPatterns.md',
-      ],
-      '/server/nginx/':[
-        '/server/nginx/install.md',
-      ]
-    },
-    sidebarDepth: 1, // 侧边栏显示2级
     
+    logo: '/avatar.png',
+    nav: [
+      {text: '首页', link: '/'},
+      {text: '分类', link: '/categories/'},
+      {text: '标签', link: '/tags/'},
+      {text: '关于', link: '/about/'},
+      {text: '归档', link: '/archives/'}
+    ],
+    sidebar: 'structuring', // 侧边栏
+    sidebarOpen: false, // 初始状态是否打开侧边栏，默认true
+    author: { // 文章默认的作者信息，可在md文件中单独配置此信息 String | {name: String, href: String}
+      name: 'Sum Liu', // 必需
+      href: 'https://github.com/myliuxia' // 可选的
+    },
+    social:[ // 社交图标，显示于博主信息栏和页脚栏
+      // iconfontCssFile: '//at.alicdn.com/t/font_1678482_u4nrnp8xp6g.css', // 可选，阿里图标库在线css文件地址，对于主题没有的图标可自由添加
+      {
+        type: 'email',
+        link: 'liuxia615@foxmail.com'
+      },
+      {
+        type: 'github',
+        link: 'https://github.com/myliuxia'
+      },
+    ],
+    
+    plugins: [ // 插件
+      ['one-click-copy', { // 代码块复制按钮
+        copySelector: ['div[class*="language-"] pre', 'div[class*="aside-code"] aside'], // String or Array
+        copyMessage: '复制成功', // default is 'Copy successfully and then paste it for use.'
+        duration: 1000, // prompt message display time.
+        showInMobile: false // whether to display on the mobile side, default: false.
+      }],
+    ]
+      
   }
 }

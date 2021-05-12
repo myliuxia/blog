@@ -5,18 +5,13 @@
         <a v-if="item.type === 'email'" :key="item.type" target="_blank" rel="external nofollow noopener" :class="`icon-${item.type}`"
         :title="`${item.type}`" :href="`mailto:${item.link}`">{{item.type}}</a>
         <a v-else-if="item.type === 'github'" :key="item.type" target="_blank" rel="external nofollow noopener" :class="`icon-${item.type}`"
-        :title="`${item.type}`" :href="`https://github.com/${item.link}`">{{item.type}}</a>
+        :title="`${item.type}`" :href="item.link">{{item.type}}</a>
+        
         <a v-else :key="item.type" target="_blank" rel="external nofollow noopener" :class="`icon-${item.type}`"
         :title="`${item.type}`" :href="`${item.link}`">{{item.type}}</a>
       </template>
     </div>
     <p class="copyright" v-html="$themeConfig.copyright"></p>
-    <p class="powered">
-      <span class="">Powered by <a href="https://vuepress.vuejs.org" target="_blank"
-          rel="external nofollow noopener">VuePress</a></span>
-      <span class="φde"> Theme - <a href="https://github.com/80maker/vuepress-theme-maker" target="_blank"
-          rel="external nofollow noopener">Maker</a></span>
-    </p>
   </div>
 </template>
 <script>
