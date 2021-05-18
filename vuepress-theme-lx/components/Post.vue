@@ -32,25 +32,6 @@
       </header>
       <div class="article-con">
         <Content class="article-content" :class="{'copy-code-enabled': $themeConfig.copy}" itemprop="articleBody" />
-        <div class="article-copyright">
-          <ul>
-            <li class="article-copyright__item">
-              <strong class="article-copyright__title">Last-updated<span>:</span></strong>
-              <p class="article-copyright__text">{{$page.lastUpdated}}</p>
-            </li>
-            <li class="article-copyright__item">
-              <strong class="article-copyright__title">Copyright<span>:</span></strong>
-              <p class="article-copyright__text">自由转载-非商用-禁止演绎-保持署名（<a href="http://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh">CC
-                  BY-NC-ND 4.0</a>）</p>
-            </li>
-            <li class="article-copyright__item">
-              <strong class="article-copyright__title">Link<span>:</span></strong>
-              <p class="article-copyright__text"><a :href="pageLink"
-                  :title="$page.title">{{pageLink}}</a></p>
-            </li>
-          </ul>
-        </div>
-        <Reward v-if="isShowReward"/>
       </div>
       <div class="article-footer">
         <PostTag v-if="$frontmatter.tags" :tags="$frontmatter.tags" />

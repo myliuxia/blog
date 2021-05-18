@@ -36,15 +36,15 @@ export default {
     setMode(status) {
       if (status === 1) {
         this.status = 1;
-        document.documentElement.classList.remove('light');
-        document.documentElement.classList.add('dark');
+        document.body.classList.remove('theme-mode-light');
+        document.body.classList.add('theme-mode-dark');
       } else if (status === 2) {
         this.status = 2;
-        document.documentElement.classList.remove('dark');
-        document.documentElement.classList.add('light');
+        document.body.classList.remove('theme-mode-dark');
+        document.body.classList.add('theme-mode-light');
       } else if (status === 0) {
         this.status = 0;
-        document.documentElement.classList.remove('dark', 'light');
+        document.body.classList.remove('theme-mode-dark', 'theme-mode-light');
       }
     }
   }

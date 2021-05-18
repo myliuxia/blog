@@ -136,5 +136,4 @@ export default {
 </script>
 <style lang="stylus">
 @require '../styles/mobile'
-@require '../styles/color_scheme'
 </style>
