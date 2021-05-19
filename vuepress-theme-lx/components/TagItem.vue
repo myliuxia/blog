@@ -37,7 +37,7 @@ export default {
 </script>
 <style lang="stylus">
 .tag-item
-  background var(--theme-card-background)
+  background var(--mainBg)
   border-radius: 6px;
   padding: 2.15rem;
 </style>

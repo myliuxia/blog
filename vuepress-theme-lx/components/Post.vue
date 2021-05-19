@@ -77,10 +77,10 @@ export default {
 
 <style lang="stylus">
 .post
-  background var(--theme-card-background) 
+  background var(--mainBg) 
   border-radius: 6px;
   line-height 1.8
-  color var(--theme-foreground-color)
+  color var(--textColor)
   h2, h3, h4, h5, h6
     margin: 2rem 0 1rem;
     font-weight: 700;
@@ -133,9 +133,7 @@ export default {
   padding: 0.80625rem 2.15rem 2.15rem;
 .article-footer
   padding: 0 2.15rem;
-  border-color: var(--theme-border-color);
-  .vssue
-    padding: 10px 0;
+  border-color: var(--borderColor);
 .article-hr
   margin: .7rem 0 1rem;
   height: 2px;

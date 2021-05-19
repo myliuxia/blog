@@ -46,7 +46,7 @@ export default {
 <style lang="stylus">
 .friend-link
   header
-    background var(--theme-card-background)
+    background var(--mainBg)
     border-radius: 6px;
   .post-title
     margin 0
@@ -54,14 +54,14 @@ export default {
     margin-top 2rem
   &__item
     padding 1rem 2rem
-    background var(--theme-card-background)
+    background var(--mainBg)
     display flex
     align-items center
     &:first-child
       border-top-left-radius 6px
       border-top-right-radius 6px
     &:not(:last-child)
-      border-bottom dotted 1px var(--theme-border-color)
+      border-bottom dotted 1px var(--borderColor)
     &:last-child
       border-bottom-left-radius 6px
       border-bottom-right-radius 6px
@@ -84,7 +84,7 @@ export default {
         border-radius 50%
   &__content
     margin-top 2rem
-    background var(--theme-card-background)
+    background var(--mainBg)
     border-radius: 6px;
     padding: 0.80625rem 2.15rem 2.15rem;
 </style>

@@ -49,8 +49,8 @@ export default {
   height: 20px;
   line-height: 20px;
   text-align: center;
-  background-color: var(--theme-card-background);
-  box-shadow: 0px 1px 5px var(--theme-border-color);
+  background-color: var(--mainBg);
+  box-shadow: 0px 1px 5px var(--borderColor);
   &:hover
     min-width 110px
     padding-right 8px

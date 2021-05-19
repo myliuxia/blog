@@ -19,8 +19,8 @@ body, html
 body
   font-family var(--theme-font-base)
   font-display swap
-  color var(--theme-foreground-color)
-  background var(--theme-background)
+  color var(--textColor)
+  background var(--bodyBg)
   background-attachment fixed
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
@@ -29,7 +29,7 @@ a
   color: inherit
   text-decoration-line: none;
   &:link, &:visited
-    color var(--theme-foreground-color)
+    color var(--textColor)
   &:hover, &:active
     color var(--theme-accent-color)
 blockquote
@@ -282,14 +282,7 @@ img {
       transform: none
   }
 }
-// 评论
-.vssue
-  color var(--theme-foreground-color)
-  opacity .8
-  .vssue-new-comment, .vssue-header
-    border-bottom-color var(--theme-border-color)
-  .vssue-comment-avatar img
-    border-radius: 50%
+
 // 滚动条
 ::-webkit-scrollbar
   width: 8px;
@@ -300,10 +293,10 @@ img {
   &:hover
     background-color var(--theme-accent-color-04)
 ::-webkit-scrollbar-track 
-  background var(--theme-card-background)
+  background var(--mainBg)
   -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.08);
 .medium-zoom-overlay
-  background: var(--theme-card-background)!important
+  background: var(--mainBg)!important
 // 覆盖nprogress进度条颜色
 #nprogress
   .bar

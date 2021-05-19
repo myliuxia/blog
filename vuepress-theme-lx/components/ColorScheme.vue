@@ -11,7 +11,7 @@ export default {
 </script>
 <style lang="stylus">
 .theme-colorScheme
-  background: var(--theme-card-background);
+  background: var(--mainBg);
   display: flex;
   justify-content: space-around;
   margin: 0 1rem;

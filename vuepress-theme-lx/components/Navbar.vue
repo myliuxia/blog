@@ -46,10 +46,10 @@ export default {
           right: 0;
           width: 7px;
           height: 7px;
-          background: var(--theme-background);
+          background: var(--bodyBg);
           border-radius: 50%;
           content: "";
-          box-shadow: 0 0 0 1px var(--theme-border-color);
+          box-shadow: 0 0 0 1px var(--borderColor);
           transform: translate(50%,-50%);
         &:not(.external)
           margin-bottom inherit
@@ -66,9 +66,9 @@ export default {
     position relative
     z-index 1
     input
-      background-color: var(--theme-card-background);
+      background-color: var(--mainBg);
     .suggestions
-      background-color: var(--theme-card-background);
+      background-color: var(--mainBg);
       text-align left
       left 1rem
       right 0

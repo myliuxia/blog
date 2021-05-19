@@ -43,7 +43,7 @@ Vue.use(KrPrintDesigner);
 
 demo.vue
 
-```html
+``` html
 <template>
   <div id="app">
     <kr-print-designer
@@ -58,7 +58,7 @@ demo.vue
 
 lodop 打印/预览及设置 lodop 注册信息方法使用
 
-```javascript
+``` javascript
 // 直接打印
 this.$lodop.print(temp, data);
 
@@ -280,8 +280,8 @@ widgetOptions 为设计打印模板的打印项配置， 打印项有多种类�
 | left         | 左偏移量（px）                              | Number  | ——                                                            | 50               |
 | top          | 上偏移量（px）                              | Number  | ——                                                            | 0                |
 | title        | 打印项名称                                  | String  | ——                                                            | "html"           |
-| value        | html 内容                                   | String  | ——                                                            | "<div>html<div>" |
-| defaultValue | 默认 html                                   | String  | ——                                                            | "<div>html<div>" |
+| value        | html 内容                                   | String  | ——                                                            | "<div>html</div>'" |
+| defaultValue | 默认 html                                   | String  | ——                                                            | "<div>html</div>" |
 | name         | 动态打印项数据名称（对应打印数据 key-name） | String  | ——                                                            | ''               |
 | style        | 打印项样式                                  | Object  | ——                                                            | {}               |
 

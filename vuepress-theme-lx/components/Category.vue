@@ -13,7 +13,7 @@ export default {
 </script>
 <style lang="stylus">
 .theme-category
-  background var(--theme-card-background)
+  background var(--mainBg)
   border-radius: 6px;
   padding: 2.15rem;
   &__title

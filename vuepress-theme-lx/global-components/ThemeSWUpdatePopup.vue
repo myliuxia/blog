@@ -23,26 +23,26 @@ export default {
   position: fixed;
   bottom: 7rem;
   right: 1rem;
-  background-color: var(--theme-card-background);
+  background-color: var(--mainBg);
   font-size: 1.2rem;
   line-height: 2;
   border: 1px solid;
   padding: 1.5rem 2rem;
-  border-color: var(--theme-border-color);
+  border-color: var(--borderColor);
   border-radius: 6px;
-  box-shadow: 3px 4px 11px var(--theme-border-color);
+  box-shadow: 3px 4px 11px var(--borderColor);
   text-align: center;
   z-index: 9;
   &__btn
     margin-top: .5rem;
     cursor: pointer;
     border: 1px solid;
-    border-color: var(--theme-border-color);
+    border-color: var(--borderColor);
     border-radius: .5rem;
     line-height: 2rem;
     width: 80%;
-    background-color var(--theme-card-background)
-    color var(--theme-foreground-color)
+    background-color var(--mainBg)
+    color var(--textColor)
     &:hover
       color var(--theme-accent-color)
     &:active

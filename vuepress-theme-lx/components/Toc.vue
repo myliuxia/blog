@@ -152,7 +152,7 @@ export default {
   top 0
   right 0
   box-sizing border-box
-  background: var(--theme-card-background);
+  background: var(--mainBg);
   z-index 0
   .theme-toc-item
     position relative
@@ -166,7 +166,7 @@ export default {
     a
       display block
       padding: .5em 1em;
-      color var(--theme-foreground-color)
+      color var(--textColor)
       width 100%
       box-sizing border-box
       font-size 14px

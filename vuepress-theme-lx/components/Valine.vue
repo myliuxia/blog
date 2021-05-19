@@ -46,14 +46,14 @@ export default {
 .valine-box
   .v[data-class=v]
     a
-      color var(--theme-foreground-color)
+      color var(--textColor)
       &:hover
         color var(--theme-accent-color)
     .vwrap .vheader .vinput:focus
       border-bottom-color var(--theme-accent-color)
     .vcards .vcard
       .vh .vmeta .vat
-        color var(--theme-foreground-color)
+        color var(--textColor)
         &:hover
           color var(--theme-accent-color)
       .vhead .vnick:hover

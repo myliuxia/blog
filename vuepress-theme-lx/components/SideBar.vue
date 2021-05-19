@@ -46,7 +46,7 @@ export default {
   bottom 0
   left 0
   border-right 1px solid
-  border-color var(--theme-border-color)
+  border-color var(--borderColor)
   &__inner
     display: flex;
     flex-direction column
@@ -65,7 +65,7 @@ export default {
   margin: 1rem 1rem 1em;
   border-radius: 6px;
   text-align: center;
-  background var(--theme-card-background)
+  background var(--mainBg)
   display: inline-block;
   &__logo
     position relative

@@ -72,7 +72,7 @@ export default {
   &__list
     display: inline-block;
     border: 1px solid;
-    border-color: var(--theme-border-color);
+    border-color: var(--borderColor);
     border-radius: 2.6rem;
     white-space: nowrap;
     font-size: .85rem;
@@ -92,7 +92,7 @@ export default {
         right: 0;
         height: 1.4rem;
         border-left: 1px solid;
-        border-color: var(--theme-border-color);
+        border-color: var(--borderColor);
         content: "";
         transform: translateY(-50%);
       &:first-child
@@ -104,9 +104,9 @@ export default {
   &__box
     overflow: hidden;
     border: 1px solid;
-    border-color: var(--theme-border-color);
+    border-color: var(--borderColor);
     border-radius: 6px;
-    box-shadow: 3px 4px 11px var(--theme-border-color);
+    box-shadow: 3px 4px 11px var(--borderColor);
     margin-top: 1rem;
     width: 24rem;
     margin-left: auto;

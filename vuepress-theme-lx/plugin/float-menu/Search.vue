@@ -58,7 +58,7 @@ export default {
     display: flex;
     align-items center
     margin: 3rem auto 2rem;
-    background: var(--theme-card-background);
+    background: var(--mainBg);
     border-radius: 6px;
     padding: .25rem .5rem;
     > a
@@ -83,7 +83,7 @@ export default {
       background-position 1rem 50%
       background-size 1.5rem
       padding-left 3.5rem
-      background-color var(--theme-card-background)
+      background-color var(--mainBg)
     .suggestions
       width 100%
       top 3.5rem
@@ -91,9 +91,9 @@ export default {
       left 0
       right 0
       border none
-      border-top solid 1px var(--theme-border-color)
+      border-top solid 1px var(--borderColor)
       border-radius 0 0 6px 6px
-      background-color var(--theme-card-background)
+      background-color var(--mainBg)
       a.focused
         background-color var(--theme-accent-color-005)
         color var(--theme-accent-color)

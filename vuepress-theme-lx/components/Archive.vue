@@ -63,8 +63,8 @@ export default {
 .archive
   border-radius 6px
   padding 2.15rem
-  border-color var(--theme-border-color)
-  background var(--theme-card-background) 
+  border-color var(--borderColor)
+  background var(--mainBg) 
   &__list
     margin 0
     padding-left 0
@@ -92,7 +92,7 @@ export default {
     font-size 1.78571rem
     position relative
     line-height 2.4em
-    background var(--theme-card-background)
+    background var(--mainBg)
   &__sub-item
     display flex
     align-items flex-start
@@ -109,7 +109,7 @@ export default {
   &__month
     position relative
     z-index 0
-    background var(--theme-card-background)
+    background var(--mainBg)
     padding 0 .6em
     margin-top 1rem
     color #fff

@@ -33,7 +33,7 @@ export default {
 </script>
 <style lang="stylus">
 .theme-code
-  border: 1px solid var(--theme-border-color);
+  border: 1px solid var(--borderColor);
   border-radius: 6px;
   transition: .2s;
   margin-bottom: 24px;
@@ -50,14 +50,14 @@ export default {
     padding 24px
   &__source
     ackground-color: #fafafa;
-    border-top: 1px solid var(--theme-border-color);
+    border-top: 1px solid var(--borderColor);
     overflow: hidden;
     height: 0;
     transition: height .2s;
     &.opened
       height auto
 .theme-code__action
-  border-top: 1px solid var(--theme-border-color);
+  border-top: 1px solid var(--borderColor);
   height: 44px;
   line-height 44px
   box-sizing: border-box;
