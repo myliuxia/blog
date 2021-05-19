@@ -1,81 +1,51 @@
 <template>
-  <RouterLink
-    v-if="isInternal"
+  <router-link
     class="nav-link"
-    :class="{'router-link-active': isActived}"
     :to="link"
-    :exact="exact"
     @focusout.native="focusoutAction"
-  >
-    {{ item.text }}
-  </RouterLink>
+    v-if="!isExternal(link)"
+    :exact="exact"
+  >{{ item.text }}</router-link>
   <a
     v-else
     :href="link"
-    class="nav-link external"
-    :target="target"
-    :rel="rel"
     @focusout="focusoutAction"
+    class="nav-link external"
+    :target="isMailto(link) || isTel(link) ? null : '_blank'"
+    :rel="isMailto(link) || isTel(link) ? null : 'noopener noreferrer'"
   >
     {{ item.text }}
-    <OutboundLink v-if="isBlankTarget" />
+    <OutboundLink />
   </a>
 </template>
 
 <script>
 import { isExternal, isMailto, isTel, ensureExt } from '../util'
+
 export default {
-  name: 'NavLink',
   props: {
     item: {
       required: true
     }
   },
+
   computed: {
-    isActived() {
-      return this.link === this.$page.regularPath;
-    },
     link () {
       return ensureExt(this.item.link)
     },
+
     exact () {
       if (this.$site.locales) {
         return Object.keys(this.$site.locales).some(rootLink => rootLink === this.link)
       }
       return this.link === '/'
-    },
-    isNonHttpURI () {
-      return isMailto(this.link) || isTel(this.link)
-    },
-    isBlankTarget () {
-      return this.target === '_blank'
-    },
-    isInternal () {
-      return !isExternal(this.link) && !this.isBlankTarget
-    },
-    target () {
-      if (this.isNonHttpURI) {
-        return null
-      }
-      if (this.item.target) {
-        return this.item.target
-      }
-      return isExternal(this.link) ? '_blank' : ''
-    },
-    rel () {
-      if (this.isNonHttpURI) {
-        return null
-      }
-      if (this.item.rel === false) {
-        return null
-      }
-      if (this.item.rel) {
-        return this.item.rel
-      }
-      return this.isBlankTarget ? 'noopener noreferrer' : null
     }
   },
+
   methods: {
+    isExternal,
+    isMailto,
+    isTel,
     focusoutAction () {
       this.$emit('focusout')
     }

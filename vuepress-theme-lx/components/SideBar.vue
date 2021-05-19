@@ -18,7 +18,6 @@
         <p class="theme-header__slogan">{{$site.description}}</p>
       </div>
       <SubNav/>
-      <Navbar/>
       <FooterBar/>
     </div>
   </div>

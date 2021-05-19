@@ -5,18 +5,21 @@
     @touchstart="onTouchStart"
     @touchend="onTouchEnd"
   >
+
+    <Navbar
+      v-if="shouldShowNavbar"
+      @toggle-sidebar="toggleSidebar"
+    />
+    
     <SideBar/>
     <div class="theme-main">
-      <slot name="main">
         <Home v-if="$page.pageType === 'home'" />
         <Archive v-else-if="$page.pageType === 'archive'" />
         <Category v-else-if="$page.pageType === 'category'" />
         <CategoryItem v-else-if="$page.pageType === 'categoryItem'" />
         <Tag v-else-if="$page.pageType === 'tag'" />
         <TagItem v-else-if="$page.pageType === 'tagItem'" />
-        <FriendLink v-else-if="$page.pageType === 'friendLink'" />
         <Post v-else></Post>
-      </slot> 
     </div>
     <SvgSprite/>
     
@@ -31,8 +34,8 @@ import Tag from '@theme/components/Tag.vue'
 import CategoryItem from '@theme/components/CategoryItem.vue'
 import TagItem from '@theme/components/TagItem.vue'
 import Post from '@theme/components/Post.vue'
-import FriendLink from '@theme/components/FriendLink.vue'
 import SideBar from '@theme/components/SideBar.vue'
+import Navbar from '@theme/components/Navbar.vue'
 import SvgSprite from '@theme/components/SvgSprite.vue'
 
 import { resolveSidebarItems } from '../util'
@@ -47,8 +50,8 @@ export default {
     TagItem,
     Post,
     SideBar,
-    FriendLink,
     SvgSprite,
+    Navbar
   },
   data () {
     return {
