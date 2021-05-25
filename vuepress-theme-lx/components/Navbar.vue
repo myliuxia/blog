@@ -1,34 +1,27 @@
 <template>
-  <header class="navbar blur">
-
-    <router-link
-      :to="$localePath"
-      class="home-link"
-    >
-      <img
-        class="logo"
-        v-if="$site.themeConfig.logo"
-        :src="$withBase($site.themeConfig.logo)"
-        :alt="$siteTitle"
-      />
-      <span
-        ref="siteName"
-        class="site-name"
-        v-if="$siteTitle"
-        :class="{ 'can-hide': $site.themeConfig.logo }"
-      >{{ $siteTitle }}</span>
-    </router-link>
-
-    <div
-      class="links"
-      :style="linksWrapMaxWidth ? {
-        'max-width': linksWrapMaxWidth + 'px'
-      } : {}"
-    >
-      <SearchBox
-        v-if="$site.themeConfig.search !== false && $page.frontmatter.search !== false"
-      />
-      <NavLinks class="can-hide" />
+  <header class="header-wrapper" :class="{'shrink':shrink,'hide':hide}">
+    <div class="header-content">
+      <router-link
+        :to="$localePath"
+        class="left"
+      >
+        <div v-if="$site.themeConfig.logo" class="logo-image">
+          <img
+            :src="$withBase($site.themeConfig.logo)"
+            :alt="$siteTitle"
+          />
+        </div>
+        <span
+          ref="siteName"
+          class="logo-title"
+          v-if="$siteTitle"
+        >{{ $siteTitle }}</span>
+      </router-link>
+      
+      <div class="right">
+        <SearchBox v-if="$site.themeConfig.search !== false && $page.frontmatter.search !== false" />
+        <NavLinks class="can-hide" />
+      </div>
     </div>
   </header>
 </template>
@@ -42,7 +35,10 @@ export default {
 
   data () {
     return {
-      linksWrapMaxWidth: null
+      linksWrapMaxWidth: null,
+      scrollTop:0,
+      shrink:false, // shrink:缩小显示
+      hide:false, // hide:隐藏
     }
   },
 
@@ -54,13 +50,16 @@ export default {
         this.linksWrapMaxWidth = null
       } else {
         this.linksWrapMaxWidth = this.$el.offsetWidth - NAVBAR_VERTICAL_PADDING
-          - (this.$refs.siteName && this.$refs.siteName.offsetWidth || 0)
+          - (this.$refs.siteName && this.$refs.siteName.offsetWidth || 0)  
       }
     }
     handleLinksWrapWidth()
     window.addEventListener('resize', handleLinksWrapWidth, false)
+    window.addEventListener('scroll', this._onScroll)
   },
-
+  beforeDestroy() {
+    window.removeEventListener('scroll', this._onScroll)
+  },
   computed: {
     algolia () {
       return this.$themeLocaleConfig.algolia || this.$site.themeConfig.algolia || {}
@@ -68,6 +67,22 @@ export default {
 
     isAlgoliaSearch () {
       return this.algolia && this.algolia.apiKey && this.algolia.indexName
+    }
+  },
+  methods:{
+    _onScroll(){
+      const windowHeight = document.documentElement.clientHeight
+      const scrollTop = document.body.scrollTop + document.documentElement.scrollTop
+      if(scrollTop<10){
+        this.shrink = false
+        this.hide = false
+      }else if(scrollTop < windowHeight || this.scrollTop > scrollTop){
+        this.hide = false
+        this.shrink = true
+      }else{
+        this.hide = true
+      }
+      this.scrollTop == scrollTop
     }
   }
 }
@@ -81,9 +96,121 @@ function css (el, property) {
 </script>
 
 <style lang="stylus">
+$logo-title-font-size = 1.6rem;
+$pc-search-icon-font-size = 1.5rem;
+$logo-image-box-width = 46px;
+
+.header-wrapper{       
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%; 
+  height: $header-height;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color var(--blurBg)
+  z-index: 1005;
+  box-shadow 0 2px 5px rgba(0,0,0,.06);
+  transition-t("transform, padding-left, height", "0, 0, 0", "0.3, 0.2, 0.2", "ease-out, linear, ease");
+  &.shrink{
+    height: $header-shrink-height;
+    .left{
+      transform: scale(0.72);
+      transform-origin: left;
+    }
+  }
+  &.hide{
+    height: 0;
+    overflow hidden
+  }
+
+
+  +keep-tablet(){
+    height: $header-height * 0.9;
+    &.shrink{
+      height: $header-shrink-height * 0.9;
+    }
+  }
+  +keep-mobile(){
+    height: $header-height * 0.8;
+    &.shrink{
+      height: $header-shrink-height * 0.8;
+    }
+  }
+  .header-content{
+    position: relative;
+    height: 100%;
+    width: $main-content-width;
+    max-width: $content-max-width;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    +keep-tablet() {
+      width: $main-content-width-tablet;
+    }
+
+    +keep-mobile() {
+      width: $main-content-width-mobile;
+    }
+    .left {
+      display: flex;
+      align-items: center;
+      transition-t("transform", "0", "0.2", "linear");
+      .logo-image {
+        width: $logo-image-box-width;
+        height: $logo-image-box-width;
+        margin-right: 8px;
+
+
+        +keep-tablet() {
+          width: $logo-image-box-width * 0.9;
+          height: $logo-image-box-width * 0.9;
+        }
+
+        +keep-mobile() {
+          width: $logo-image-box-width * 0.8;
+          height: $logo-image-box-width * 0.8;
+        }
+
+        img {
+          border-radius: 6px;
+          width: 100%;
+        }
+      }
+
+      .logo-title {
+        font-size: $logo-title-font-size;
+        font-weight: bold;
+        letter-spacing: 1px;
+        line-height: 1;
+        color: var(--textColor);
+
+        +keep-tablet() {
+          font-size: $logo-title-font-size * 0.9;
+        }
+
+        +keep-mobile() {
+          font-size: $logo-title-font-size * 0.8;
+        }
+      }
+
+    }
+  }
+}
+
 $navbar-vertical-padding = 0.7rem
 $navbar-horizontal-padding = 1.5rem
 .navbar
+  position fixed
+  z-index 20
+  top 0
+  left 0
+  right 0
+  background-color var(--blurBg)
+  box-shadow 0 2px 5px rgba(0,0,0,.06)
   padding $navbar-vertical-padding $navbar-horizontal-padding
   line-height $navbarHeight - 1.4rem
   transition transform 0.3s
@@ -115,11 +242,11 @@ $navbar-horizontal-padding = 1.5rem
   .navbar
     transform translateY(-100%)
 // 959
-@media (max-width $MQNarrow)
+@media (max-width $media-max-width)
   .navbar
     .site-name
       display none
-@media (max-width $MQMobile)
+@media (max-width $media-max-width-mobile)
   .navbar
     padding-left 4rem
     .can-hide

@@ -147,7 +147,7 @@ export default {
     color var(--theme-accent-color)!important
 abbr
   cursor help
-@media (max-width: $MQMobile)
+@media (max-width: $media-max-width-mobile)
   .post-title
     margin-top 0
 </style>

@@ -135,15 +135,15 @@ export default {
   .repo-link
     margin-left 1.5rem
 // 959
-@media (max-width $MQNarrow)
+@media (max-width $media-max-width)
   .nav-links
     .nav-item
       margin-left 1.2rem
-@media (max-width $MQMobile)
+@media (max-width $media-max-width-mobile)
   .nav-links
     .nav-item, .repo-link
       margin-left 0
-@media (min-width $MQMobile)
+@media (min-width $media-max-width-mobile)
   .nav-links a
     &:hover, &.router-link-active
       color var(--textColor)

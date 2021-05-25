@@ -95,7 +95,7 @@ export default {
 </script>
 <style lang="stylus">
 :root
-  --theme-narrow-width $MQNarrow
+  --theme-narrow-width $media-max-width
 .float-menu-wrap
   position: fixed;
   right: 1rem;
@@ -208,7 +208,7 @@ export default {
       background-color inherit
       top 200%
       left 0
-@media (max-width: $MQNarrow)
+@media (max-width: $media-max-width)
   .float-menu-wrap .float-menu__list
     span.icon-sidebar
       display: block

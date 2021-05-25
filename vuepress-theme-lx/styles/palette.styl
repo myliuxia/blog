@@ -1,4 +1,5 @@
 @require './code-theme'
+@require './animated'
 // light colors
 $accentColor = #607d8b
 $arrowBgColor = #ccc
@@ -16,18 +17,32 @@ $badgeErrorColor = #DA5961
 $contentClass = '.article-content'
 $descClass = '.article-desc'
 
-// // layout
-// $navbarHeight = 3.6rem
 $sidebarWidth = 20rem
-// $contentWidth = 740px
-// $homePageWidth = 960px
 
+// ========================================================================================
+// layout
+// ========================================================================================
+$header-height = 70px;                                           // header height
+$header-shrink-height = $header-height * 0.72;                   // header shrink height
+$main-content-width = 80%;                                       // main content width (PC)
+$main-content-width-tablet = 86%;                                // main content width (tablet)
+$main-content-width-mobile = 90%;                                // main content width (mobile)
+$content-max-width = 1200px                                      // max main content width
 
+// ========================================================================================
+// media query
+// ========================================================================================
 // // responsive breakpoints
-$MQNarrow = 975px
-$MQMobile = 675px
-$MQMobileNarrow = 359px
+$media-max-width = 975px                                 // media query max width (tablet)
+$media-max-width-mobile = 675px                          // media query max width (mobile)
 
+keep-tablet()
+  @media (max-width: $media-max-width )
+    { block }
+
+keep-mobile()
+  @media (max-width: $media-max-width-mobile)
+    { block }
 
 
 // 浅色模式

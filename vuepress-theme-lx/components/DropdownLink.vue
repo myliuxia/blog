@@ -153,7 +153,7 @@ export default {
           line-height 2.5rem
           font-size 12px
           padding-left 1rem
-@media (max-width: $MQNarrow)
+@media (max-width: $media-max-width)
   .dropdown-wrapper
     i
       color #fff

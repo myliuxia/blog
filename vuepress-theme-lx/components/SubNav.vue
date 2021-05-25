@@ -76,7 +76,7 @@ export default {
     margin: 0 .5rem;
     font-size: .95rem;
     opacity: .63;
-@media (max-width: $MQMobile)
+@media (max-width: $media-max-width-mobile)
   .theme-SubNav__item
     position relative
     &:after

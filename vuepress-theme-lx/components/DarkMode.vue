@@ -1,7 +1,6 @@
 <template>
   <span class="theme-mode-setting" @click="handleToggleMode" :title="title">
-    <Icon icon="auto" v-if="status === 0" :key="status"/>
-    <Icon icon="moon" v-else-if="status === 1" :key="status" />
+    <Icon icon="moon" v-if="status === 1" :key="status" />
     <Icon icon="sun" v-else :key="status"/>
   </span>
 </template>
@@ -9,12 +8,12 @@
 export default {
   data() {
     return {
-      status: 0 // 0: auto 1: dark 2: light
+      status: 0 // 1: dark 2: light
     }
   },
   computed: {
     title() {
-      const arr = ['auto', 'dark', 'light'];
+      const arr = ['dark', 'light'];
       return arr[this.status];
     }
   },
@@ -24,12 +23,10 @@ export default {
   },
   methods: {
     handleToggleMode() {
-      if (this.status === 0) {
-        this.setMode(1);
-      } else if (this.status === 1) {
+      if (this.status === 1) {
         this.setMode(2);
       } else if (this.status === 2) {
-        this.setMode(0);
+        this.setMode(1);
       }
       window.localStorage.setItem('mode', this.status);
     },
@@ -42,10 +39,7 @@ export default {
         this.status = 2;
         document.body.classList.remove('theme-mode-dark');
         document.body.classList.add('theme-mode-light');
-      } else if (status === 0) {
-        this.status = 0;
-        document.body.classList.remove('theme-mode-dark', 'theme-mode-light');
-      }
+      } 
     }
   }
 }

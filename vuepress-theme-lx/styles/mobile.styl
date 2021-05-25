@@ -1,4 +1,4 @@
-@media (max-width: $MQNarrow)
+@media (max-width: $media-max-width)
   .theme-palette
     display flex
   .theme-main
@@ -29,14 +29,14 @@
         &__inner
           height 100vh
           overflow hidden
-@media (min-width: $MQMobile)
+@media (min-width: $media-max-width-mobile)
   .theme-main__inner
     margin 2rem auto
     max-width 860px
     min-width 640px
   .theme-search__inner
     max-width: var(--theme-content-width);
-@media (max-width: $MQMobile)
+@media (max-width: $media-max-width-mobile)
   .theme-main
     transform-origin: 0 42%;
     transition-property transform border-radius
