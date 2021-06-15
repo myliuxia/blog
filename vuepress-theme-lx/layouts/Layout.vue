@@ -2,16 +2,13 @@
   <div
     class="theme-container"
     :class="pageClasses"
-    @touchstart="onTouchStart"
-    @touchend="onTouchEnd"
   >
 
     <Navbar
       v-if="shouldShowNavbar"
-      @toggle-sidebar="toggleSidebar"
     />
-    
-    <SideBar/>
+    <FirstScreen v-if="$page.pageType === 'home'"></FirstScreen>
+    <!-- <SideBar/> -->
     <div class="theme-main">
         <Home v-if="$page.pageType === 'home'" />
         <Archive v-else-if="$page.pageType === 'archive'" />
@@ -37,6 +34,7 @@ import Post from '@theme/components/Post.vue'
 import SideBar from '@theme/components/SideBar.vue'
 import Navbar from '@theme/components/Navbar.vue'
 import SvgSprite from '@theme/components/SvgSprite.vue'
+import FirstScreen from '@theme/components/FirstScreen.vue'
 
 import { resolveSidebarItems } from '../util'
 export default {
@@ -51,7 +49,8 @@ export default {
     Post,
     SideBar,
     SvgSprite,
-    Navbar
+    Navbar,
+    FirstScreen
   },
   data () {
     return {
@@ -112,28 +111,6 @@ export default {
     })
   },
   methods: {
-    toggleSidebar (to) {
-      this.isSidebarOpen = typeof to === 'boolean' ? to : !this.isSidebarOpen
-      this.$emit('toggle-sidebar', this.isSidebarOpen)
-    },
-    // side swipe
-    onTouchStart (e) {
-      this.touchStart = {
-        x: e.changedTouches[0].clientX,
-        y: e.changedTouches[0].clientY
-      }
-    },
-    onTouchEnd (e) {
-      const dx = e.changedTouches[0].clientX - this.touchStart.x
-      const dy = e.changedTouches[0].clientY - this.touchStart.y
-      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
-        if (dx > 0 && this.touchStart.x <= 80) {
-          this.toggleSidebar(true)
-        } else {
-          this.toggleSidebar(false)
-        }
-      }
-    }
   }
 }
 </script>

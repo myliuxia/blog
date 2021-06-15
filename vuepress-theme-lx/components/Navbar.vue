@@ -20,7 +20,7 @@
       
       <div class="right">
         <SearchBox v-if="$site.themeConfig.search !== false && $page.frontmatter.search !== false" />
-        <NavLinks class="can-hide" />
+        <NavLinks />
       </div>
     </div>
   </header>
@@ -196,66 +196,15 @@ $logo-image-box-width = 46px;
           font-size: $logo-title-font-size * 0.8;
         }
       }
+    }
 
+    .right{
+      flex:1;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
     }
   }
 }
-
-$navbar-vertical-padding = 0.7rem
-$navbar-horizontal-padding = 1.5rem
-.navbar
-  position fixed
-  z-index 20
-  top 0
-  left 0
-  right 0
-  background-color var(--blurBg)
-  box-shadow 0 2px 5px rgba(0,0,0,.06)
-  padding $navbar-vertical-padding $navbar-horizontal-padding
-  line-height $navbarHeight - 1.4rem
-  transition transform 0.3s
-  a, span, img
-    display inline-block
-  .logo
-    height $navbarHeight - 1.4rem
-    min-width $navbarHeight - 1.4rem
-    margin-right 0.8rem
-    vertical-align top
-  .site-name
-    font-size 1.3rem
-    font-weight 600
-    color var(--textColor)
-    position relative
-  .links
-    padding-left 1.5rem
-    box-sizing border-box
-    white-space nowrap
-    font-size 0.9rem
-    position absolute
-    right $navbar-horizontal-padding
-    top $navbar-vertical-padding
-    display flex
-    .search-box
-      flex 0 0 auto
-      vertical-align top
-.hide-navbar
-  .navbar
-    transform translateY(-100%)
-// 959
-@media (max-width $media-max-width)
-  .navbar
-    .site-name
-      display none
-@media (max-width $media-max-width-mobile)
-  .navbar
-    padding-left 4rem
-    .can-hide
-      display none
-    .links
-      padding-left 1.5rem
-    .site-name
-      width calc(100vw - 9.4rem)
-      overflow hidden
-      white-space nowrap
-      text-overflow ellipsis
 </style>
