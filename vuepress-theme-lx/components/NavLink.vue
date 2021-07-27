@@ -1,11 +1,10 @@
 <template>
-  <router-link
+  <span
     class="nav-link"
-    :to="link"
-    @focusout.native="focusoutAction"
+    @click="toRouter(link)"
     v-if="!isExternal(link)"
     :exact="exact"
-  >{{ item.text }}</router-link>
+  >{{ item.text }}</span>
   <a
     v-else
     :href="link"
@@ -39,7 +38,7 @@ export default {
         return Object.keys(this.$site.locales).some(rootLink => rootLink === this.link)
       }
       return this.link === '/'
-    }
+    },
   },
 
   methods: {
@@ -48,6 +47,11 @@ export default {
     isTel,
     focusoutAction () {
       this.$emit('focusout')
+    },
+    // 路由跳转
+    toRouter(link){
+      this.$router.push(link)
+      this.$emit('go')
     }
   }
 }

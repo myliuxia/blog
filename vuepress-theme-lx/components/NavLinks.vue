@@ -26,11 +26,16 @@
       </div>
     </div>
     
+    <!-- nav drawer -->
     <div class="nav-drawer" :class="{'show':showMenu}">
       <ul class="drawer-menu-list">
-        <li class="drawer-menu-item"></li>
+        <li class="drawer-menu-item" v-for="item in userLinks" :key="item.link">
+          <DropdownLink v-if="item.type === 'links'" :item="item" />
+          <NavLink v-else :item="item" @go="showMenu = false" />
+        </li>
       </ul>
     </div>
+    <!-- mask -->
     <div v-show="showMenu" class="nav-mask" @click="showMenu = false"></div>
   </div>
 </template>
