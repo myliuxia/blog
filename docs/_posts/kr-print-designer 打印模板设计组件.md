@@ -6,11 +6,11 @@ tags:
   - Vue
   - Lodop
 date: 2021-05-12 20:08:00
-permalink: /pages/450503/
 sidebar: auto
+permalink: /pages/cc68db/
 ---
 
->一个基于 Vue、ElementUi、C-Lodop 的打印模板设计器。实现打印模板的设计、预览和打印功能。
+>一个基于 Vue、ElementUI、C-Lodop 的打印模板设计器。实现打印模板的设计、预览和打印功能。
 <!-- more -->
 
 # kr-print-designer
