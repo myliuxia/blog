@@ -149,6 +149,7 @@ export default {
     display: inline-block;
     margin-left: 1.5rem;
     line-height: 2rem;
+    cursor: pointer
 
     &:first-child {
       margin-left: 0;

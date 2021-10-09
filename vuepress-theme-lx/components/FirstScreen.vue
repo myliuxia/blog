@@ -1,6 +1,6 @@
 <template>
   <div class="first-screen-container" :style="{ height: height + 'px' }">
-    <canvas ref="canvas"></canvas>
+    <!-- <canvas ref="canvas"></canvas> -->
   </div>
 </template>
 <script>
@@ -83,5 +83,16 @@ export default {
 .first-screen-container {
   width: 100%;
   background-color: #ffffff;
+  background: url('~assets/images/home1.jpg') no-repeat;
+  background-size: cover; 
+  background-position: center 0;
+  +keep-tablet(){
+    background: url('~assets/images/home1.jpg') no-repeat;
+  }
+  +keep-mobile(){
+    background: url('~assets/images/home2.jpg') no-repeat;
+    background-size: cover; 
+    background-position: 0 center;
+  }
 }
 </style>
