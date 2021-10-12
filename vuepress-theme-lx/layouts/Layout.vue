@@ -3,7 +3,6 @@
     class="theme-container"
     :class="pageClasses"
   >
-
     <Navbar
       v-if="shouldShowNavbar"
     />

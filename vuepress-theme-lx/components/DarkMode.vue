@@ -8,7 +8,7 @@
 export default {
   data() {
     return {
-      status: 0 // 1: dark 2: light
+      status: 2 // 1: dark 2: light
     }
   },
   computed: {
@@ -23,6 +23,7 @@ export default {
   },
   methods: {
     handleToggleMode() {
+      console.log('theme-mode：')
       if (this.status === 1) {
         this.setMode(2);
       } else if (this.status === 2) {
