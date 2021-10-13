@@ -17,7 +17,7 @@ export default {
   mounted() {
     this.height = document.documentElement.clientHeight;
     this.width = document.documentElement.clientWidth;
-    this.createCtx();
+    // this.createCtx();
   },
   methods: {
     createCtx() {
