@@ -4,9 +4,9 @@ date: 2021-10-15 15:04:47
 permalink: /pages/b935cd/
 sidebar: auto
 categories:
-  - 随笔
+  - 技术
 tags:
-  - 
+  - Git
 ---
 ## Git 常用命令
  在使用Git时我们先要明确Git的四个工作区域，分别是工作区（Workspace）、暂存区（Index/Stage）、本地仓库（Repository）、远程仓库（Remote）
