@@ -12,6 +12,8 @@ tags:
 <!-- more -->
 ## 任务队列（消息队列）
 
+![图片](/image/FIFO.jpg)
+
 `队列`是一种先进先出（FIFO-first in first out）的数据结构。任务队列就是以先进先出的原则按顺序执行队列中的任务。有新任务时IO线程就将任务添加在队列尾部，要执行任务时就从队列头部取出执行。
 
 但是队列中任务类型太多，而且是多个线程操作同一个任务队列，比如鼠标滚动、点击、文件读写、DOM解析、JS执行等等...... 
@@ -41,6 +43,9 @@ tags:
 
 - `微任务包含：` promise回调、proxy、MutationObserver(监听DOM)、node中的process.nextTick 等
 - `宏任务包含：` 渲染事件、请求、script、setTimeout、setInterval、node中的setImmediate、I/O 等
+
+
+![图片](/image/event-loop.jpg)
 
 ## 事件循环（EventLoop）
 
