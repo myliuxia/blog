@@ -6,7 +6,7 @@
     <Navbar
       v-if="shouldShowNavbar"
     />
-    <FirstScreen v-if="$page.pageType === 'home'"></FirstScreen>
+    <!-- <FirstScreen v-if="$page.pageType === 'home'"></FirstScreen> -->
     <!-- <SideBar/> -->
     <div class="theme-main">
         <Home v-if="$page.pageType === 'home'" />
