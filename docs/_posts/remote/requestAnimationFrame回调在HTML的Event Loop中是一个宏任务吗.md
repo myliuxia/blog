@@ -8,7 +8,8 @@ categories:
 tags:
   - JavaScript
 ---
-转载自：https://github.com/ginobilee/blog/issues/6
+>转载自：https://github.com/ginobilee/blog/issues/6
+<!-- more -->
 
 > 我们知道浏览器在页面运行时利用Event loop来协调事件、交互、脚本、渲染、网络以及其它工作。Event loop的规则基于HTML的对应规范(引用1，后面提到的规范都是指它)。规范指出，一个event loop应该维护一个或多个任务队列(task queue)，以及一个微任务队列(microtask queue)。社区里一般将前者称为宏任务。
 
