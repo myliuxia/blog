@@ -64,21 +64,21 @@ class MyPromise{
         queueMicrotask(()=>{
           try{
             // 获得回调处理结果
-            let x = onFulfilled(this._value)
+            const x = onFulfilled(this._value)
             // 集中处理回调返回值
             resolvePromise(promise, x, resolve, reject)
           }catch(err){
-            this.reject(err)
+            reject(err)
           }
         })
       } else if (this._status === REJECTED) {
         queueMicrotask(()=>{
           try{
-            let x = onRejected(this._value)
+            const x = onRejected(this._reason)
             // 集中处理回调返回值
             resolvePromise(promise, x, resolve, reject)
           }catch(err){
-            this.reject(err)
+            reject(err)
           }
         })
       } else if (this._status === PENDING) {
@@ -87,20 +87,20 @@ class MyPromise{
         this._onFulfilledCallback.push(() => {
           queueMicrotask(()=>{
             try{
-              let x = onFulfilled(this._value)
+              const x = onFulfilled(this._value)
               resolvePromise(promise, x, resolve, reject)
             }catch(err){
-              this.reject(err)
+              reject(err)
             }
           })
         })
         this._onRejectedCallback.push(() => {
           queueMicrotask(()=>{
             try{
-              let x = onRejected(this._value)
+              const x = onRejected(this._reason)
               resolvePromise(promise, x, resolve, reject)
             }catch(err){
-              this.reject(err)
+              reject(err)
             }
           })
         })
