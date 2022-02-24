@@ -65,9 +65,9 @@ class MyPromise{
         queueMicrotask(()=>{
           try{
             // 获得回调处理结果
-            let res = onFulfilled(this._value)
+            let x = onFulfilled(this._value)
             // 集中处理回调返回值
-            this.resolvePromise(promise, res, resolve, reject)
+            resolvePromise(promise, x, resolve, reject)
           }catch(err){
             this.reject(err)
           }
@@ -75,9 +75,9 @@ class MyPromise{
       } else if (this._status === REJECTED) {
         queueMicrotask(()=>{
           try{
-            let res = onRejected(this._value)
+            let x = onRejected(this._value)
             // 集中处理回调返回值
-            this.resolvePromise(res, resolve, reject)
+            resolvePromise(promise, x, resolve, reject)
           }catch(err){
             this.reject(err)
           }
@@ -88,8 +88,8 @@ class MyPromise{
         this._onFulfilledCallback.push(() => {
           queueMicrotask(()=>{
             try{
-              let res = onFulfilled(this._value)
-              this.resolvePromise(promise, res, resolve, reject)
+              let x = onFulfilled(this._value)
+              resolvePromise(promise, x, resolve, reject)
             }catch(err){
               this.reject(err)
             }
@@ -98,8 +98,8 @@ class MyPromise{
         this._onRejectedCallback.push(() => {
           queueMicrotask(()=>{
             try{
-              let res = onRejected(this._value)
-              this.resolvePromise(promise, res, resolve, reject)
+              let x = onRejected(this._value)
+              resolvePromise(promise, x, resolve, reject)
             }catch(err){
               this.reject(err)
             }
@@ -109,19 +109,6 @@ class MyPromise{
     })
     return promise
   }
-  // 处理回调返回值
-  resolvePromise(promise, res, resolve, reject) {
-    if (promise === res) {
-      return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
-    }
-    // 判断 res 是不是 MyPromise 实例
-    if (res instanceof MyPromise) {
-      res.then(resolve, reject)
-    } else {
-      resolve(res)
-    }
-  }
-  
   // resolve 静态方法
   static resolve(arg){
     // 如果参数时MyPromise实例就直接返回
@@ -140,4 +127,72 @@ class MyPromise{
     })
   }
 }
-export default MyPromise
+
+MyPromise.deferred = function () {
+  var result = {};
+  result.promise = new MyPromise(function (resolve, reject) {
+    result.resolve = resolve;
+    result.reject = reject;
+  });
+  return result;
+}
+
+// 处理回调返回值
+function resolvePromise(promise, x, resolve, reject) {
+  // 如果返回的是自己，抛出错误并返回
+  if (promise === x) {
+    return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
+  }
+  // 判断 x 是不是 MyPromise 实例
+  if (typeof x === 'object' || typeof x === 'function') {
+    if(x === null){
+      return resolve(x)
+    }
+    let then
+    try {
+      // 把 x.then 赋值给then
+      then = x.then
+    }catch(error){
+      // 如果取 x.then 的值时抛出错误 error ，则以 error 为据因拒绝 promise
+      return reject(error);
+    }
+
+    // 如果 then 是函数
+    if (typeof then === 'function') {
+      let called = false;
+      try {
+        then.call(
+          x, // this 指向 x
+          // 如果 resolvePromise 以值 y 为参数被调用，则运行 [[Resolve]](promise, y)
+          y => {
+            // 如果 resolvePromise 和 rejectPromise 均被调用，
+            // 或者被同一参数调用了多次，则优先采用首次调用并忽略剩下的调用
+            // 实现这条需要前面加一个变量 called
+            if (called) return;
+            called = true;
+            resolvePromise(promise, y, resolve, reject);
+          },
+          // 如果 rejectPromise 以据因 r 为参数被调用，则以据因 r 拒绝 promise
+          r => {
+            if (called) return;
+            called = true;
+            reject(r);
+          });
+      } catch (error) {
+        // 如果调用 then 方法抛出了异常 error：
+        // 如果 resolvePromise 或 rejectPromise 已经被调用，直接返回
+        if (called) return;
+
+        // 否则以 error 为据因拒绝 promise
+        reject(error);
+      }
+    } else {
+      // 如果 then 不是函数，以 x 为参数执行 promise
+      resolve(x);
+    }
+  } else {
+    resolve(x)
+  }
+}
+
+module.exports = MyPromise
