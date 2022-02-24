@@ -35,8 +35,7 @@ class MyPromise{
       this._value = value
       // 循环执行回调
       while(this._onFulfilledCallback.length){
-        const cb = this._onFulfilledCallback.shift()
-        cb && cb(this._value)
+        this._onFulfilledCallback.shift()(value)
       }
     }
   }
@@ -49,16 +48,16 @@ class MyPromise{
       this._reason = reason
       // 循环执行回调
       while(this._onRejectedCallback.length){
-        const cb = this._onRejectedCallback.shift()
-        cb && cb(this._value)
+        this._onRejectedCallback.shift()(reason)
       }
     }
   }
 
   then(onFulfilled, onRejected) {
     // 如果不传，就使用默认函数
-    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value;
-    onRejected = typeof onRejected === 'function' ? onRejected : reason => {throw reason};
+    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value
+    onRejected = typeof onRejected === 'function' ? onRejected : reason => { throw reason }
+    
     // 为了链式调用，这里创建一个MyPromise，并return出去
     const promise = new MyPromise((resolve, reject) => {
       if (this._status === FULFILLED) {

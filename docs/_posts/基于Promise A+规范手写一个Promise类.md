@@ -190,8 +190,7 @@ resolve = (value) => {
     this._value = value
     // 循环执行回调
     while(this._onFulfilledCallback.length){
-      const cb = this._onFulfilledCallback.shift()
-      cb && cb(this._value)
+      this._onFulfilledCallback.shift()(value)
     }
   }
 }
@@ -204,8 +203,7 @@ reject = (reason) => {
     this._reason = reason
     // 循环执行回调
     while(this._onRejectedCallback.length){
-      const cb = this._onRejectedCallback.shift()
-      cb && cb(this._reason)
+      this._onRejectedCallback.shift()(reason)
     }
   }
 }
