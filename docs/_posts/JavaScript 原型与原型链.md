@@ -1,5 +1,5 @@
 ---
-title: JavaScript 原型与原型链（继承）
+title: JavaScript 原型与原型链
 date: 2021-10-22 15:30:13
 permalink: /pages/b97566/
 sidebar: auto
@@ -94,3 +94,44 @@ console.log(person.constructor === Person); // true
 
 
 >补充说明：Object.prototype 的原型为Null, 也就是整个原型链的末端
+
+## new 一个对象的过程
+在《JavaScript模式》这本书中，new的过程说的比较直白，当我们new一个构造器，主要有三步：
+- 创建一个空对象，将它的引用赋给 this，继承函数的原型。
+- 通过 this 将属性和方法添加至这个对象
+- 最后返回 this 指向的新对象，也就是实例（如果没有手动返回其他的对象）
+
+我们先看几个例子
+
+第一个例子：
+```javascript
+function Person (name) {
+  this.name = name
+}
+let a = new Person('a')
+console.log(a.name)   // 输出a
+```
+
+第二个例子：
+
+```javascript
+function Person(name) {
+  let o = {}
+  this.name = name 
+  return  o
+}
+let a = new Person('a') 
+console.log(a.name )   // 输出undefined
+```
+
+第三个例子：
+
+```javascript
+function Person(name) {
+  this.name = name
+  return 'jack'
+}
+let a = new Person('a')
+console.log(a.name) // 输出a
+```
+我们发现如果在构造函数Person里不写return 语句，它其实隐式的返回当前this所代表的对象。如果写了return，就要分两种情况，如果返回的是一个对象，就直接返回如例子二，如果返回一个非对象，此时内部仍然返回this所代表的对象如例子三。
