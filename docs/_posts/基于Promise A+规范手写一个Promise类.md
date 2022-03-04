@@ -4,9 +4,9 @@ date: 2022-02-23 09:35:47
 permalink: /pages/8ab9aa/
 sidebar: auto
 categories:
-  - 随笔
+  - 技术
 tags:
-  - 
+  - JavaScript
 ---
 > 基于Promise A+规范手写一个Promise类
 <!-- more -->

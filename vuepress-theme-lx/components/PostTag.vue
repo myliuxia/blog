@@ -1,6 +1,6 @@
 <template>
   <ul class="post-tag">
-    <li class="post-tag__item" v-for="item in tags">
+    <li class="post-tag__item" v-for="item in tags" :key="item">
       <router-link :to="'/tags/' + item">
         <span># {{ item }}</span>
       </router-link>

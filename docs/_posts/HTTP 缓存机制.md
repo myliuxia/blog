@@ -4,9 +4,9 @@ date: 2022-02-28 13:53:05
 permalink: /pages/7f207d/
 sidebar: auto
 categories:
-  - 随笔
+  - 技术
 tags:
-  - 
+  - http
 ---
 
 > 浏览器和服务器之间通信是通过HTTP协议，在频繁通信的过程中为了提升性能，hTTP提供了一套缓存机制
