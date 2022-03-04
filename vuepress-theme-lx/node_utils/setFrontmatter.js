@@ -28,7 +28,8 @@ function setFrontmatter (sourceDir, themeConfig) {
     // fileMatterObj => {content:'剔除frontmatter后的文件内容字符串', data:{<frontmatter对象>}, ...}
     const fileMatterObj = matter(dataStr);
 
-    if (Object.keys(fileMatterObj.data).length === 0) { // 未定义FrontMatter数据
+    if (Object.keys(fileMatterObj.data).length === 0) { 
+      // 未定义FrontMatter数据
       const stat = fs.statSync(file.filePath);
       const dateStr = dateFormat(
         getBirthtime(stat)
@@ -66,7 +67,8 @@ permalink: ${getPermalink()}${file.filePath.indexOf('_posts') > -1 ? '\r\nsideba
       fs.writeFileSync(file.filePath, `${fmData}\r\n${fileMatterObj.content}`); // 写入
       log(chalk.blue('tip ') + chalk.green(`write frontmatter(写入frontmatter)：${file.filePath} `))
 
-    } else { // 已有FrontMatter
+    } else { 
+      // 已有FrontMatter
       const matterData = fileMatterObj.data;
       let mark = false;
 

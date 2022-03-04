@@ -33,7 +33,7 @@
       <div class="article-con">
         <Content class="article-content" :class="{'copy-code-enabled': $themeConfig.copy}" itemprop="articleBody" />
       </div>
-      <div class="article-footer">
+      <div v-if="$frontmatter.article !== false" class="article-footer">
         <PostTag v-if="$frontmatter.tags" :tags="$frontmatter.tags" />
         <PostNav/>
       </div>

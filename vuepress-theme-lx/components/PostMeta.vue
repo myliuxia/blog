@@ -61,10 +61,11 @@ export default {
     }
   },
   computed: {
+    // 是否显示访问次数
     isShowReadCount() {
       let isShow = false;
       try {
-        isShow = this.$themeConfig.blog.comment.visitor;
+        isShow = this.$themeConfig?.blog?.comment?.visitor;
       } catch (error) {
         console.log(error);
       }
