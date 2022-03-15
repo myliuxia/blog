@@ -15,7 +15,7 @@ permalink: /pages/8b1c04/
 > 汇总vue相关的高频面试题
 <!-- more -->
 
-## Vue2.0 响应式原理
+## 一、Vue2.0 响应式原理
 ![图片](/image/vue_data.png)
 
 ### 核心实现类:
@@ -46,7 +46,7 @@ watcher 中实例化了 dep 并向 dep.subs 中添加了订阅者,dep 通过 not
 一句话总结:
 vue.js 采用数据劫持结合发布-订阅模式,通过 Object.defineproperty 来劫持各个属性的 setter,getter,在数据变动时发布消息给订阅者,触发响应的监听回调
 
-## Vue3.0 怎么实现数据劫持的，为什么弃用defineProperty
+## 二、Vue3.0 怎么实现数据劫持的，为什么弃用defineProperty
 在vue2.x中是采用Object.defineProperty对数据进行劫持，但对于数组和对象数据的监听上存在一定的局限。
 
 ### vue2.x对于数组的监听
@@ -125,7 +125,7 @@ methodsToPatch.forEach(function (method) {
 ```
 Vue 通过原型拦截的方式重写了数组的 7 个方法,首先获取到这个数组的ob,也就是它的 Observer 对象,如果有新的值,就调用 observeArray 对新的值进行监听,然后手动调用 notify,通知 render watcher,执行 update
 
-## Vue 生命周期及父子组件生命周期钩子函数执行顺序
+## 三、Vue 生命周期及父子组件生命周期钩子函数执行顺序
 
 ### 单一组件生命周期钩子函数执行顺序
 
@@ -156,3 +156,54 @@ Vue 通过原型拦截的方式重写了数组的 7 个方法,首先获取到这
 
 销毁过程
 >父beforeDestroy->子beforeDestroy->子destroyed->父destroyed
+
+## 四、computed 的实现原理
+computed 本质是一个惰性求值的观察者。
+
+computed 内部实现了一个惰性的 watcher,也就是 computed watcher,computed watcher 不会立刻求值,同时持有一个 dep 实例。
+
+其内部通过 this.dirty 属性标记计算属性是否需要重新求值。
+
+当 computed 的依赖状态发生改变时,就会通知这个惰性的 watcher,
+
+computed watcher 通过 this.dep.subs.length 判断有没有订阅者,
+
+有的话,会重新计算,然后对比新旧值,如果变化了,会重新渲染。 **(Vue 想确保不仅仅是计算属性依赖的值发生变化，而是当计算属性最终计算的值发生变化时才会触发渲染 watcher 重新渲染，本质上是一种优化。)**
+
+没有的话,仅仅把 this.dirty = true。 **(当计算属性依赖于其他数据时，属性并不会立即重新计算，只有之后其他地方需要读取属性的时候，它才会真正计算，即具备 lazy（懒计算）特性。)**
+
+## 五、computed 和 watch 有什么区别及运用场景?
+### 区别
+- computed 计算属性 : 依赖其它属性值,并且 computed 的值有缓存,只有它依赖的属性值发生改变,下一次获取 computed 的值时才会重新计算 computed 的值。
+
+- watch 侦听器 : 更多的是「观察」的作用,无缓存性,类似于某些数据的监听回调,每当监听的数据变化时都会执行回调进行后续操作。
+
+### 运用场景
+
+当我们需要进行数值计算,并且依赖于其它数据时,应该使用 computed,因为可以利用 computed 的缓存特性,避免每次获取值时,都要重新计算。
+
+当我们需要在数据变化时执行异步或开销较大的操作时,应该使用 watch,使用 watch 选项允许我们执行异步操作 ( 访问一个 API ),限制我们执行该操作的频率,并在我们得到最终结果前,设置中间状态。这些都是计算属性无法做到的。
+
+## 六、Vue 中 key 的作用是什么 
+
+key 是每个 vnode 的唯一 id,依靠 key,我们的diff操作可以更准确、更快速（对于简单列表页渲染来说 diff 节点也更快,但会产生一些隐藏的副作用,比如可能不会产生过渡效果,或者在某些节点有绑定数据（表单）状态，会出现状态错位。）
+
+diff 算法的过程中，先会进行新旧节点的首尾交叉对比，当无法匹配的时候会用新节点的key与旧节点进行对比，从而快速的找到相应节点
+
+更准确：因为带 key 就不是就地复用了，在sameNode 函数 a.key === b.key 对比中可以避免就地复用的情况。所以会更家准确，如果不加key,会导致之前节点的状态被保留下来，会产生一系列的bug。
+
+更快速：key的唯一性可以被Map数据结构充分利用，相比于遍历查找的时间复杂度 O(n),Map的时间复杂度仅仅为 O(1).
+
+源码如下：
+```javascript
+function createKeyToOldIdx (children, beginIdx, endIdx) {
+  let i, key
+  const map = {}
+  for (i = beginIdx; i <= endIdx; ++i) {
+    key = children[i].key
+    if (isDef(key)) map[key] = i
+  }
+  return map
+}
+```
+
