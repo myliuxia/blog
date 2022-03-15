@@ -73,7 +73,7 @@ Object.defineProperty 只能劫持对象的属性,因此我们需要对每个对
 因为 Proxy 可以劫持整个对象,并返回一个新的对象。Proxy 不仅可以代理对象,还可以代理数组。还可以代理动态增加的属性。
 
 
-### vue 是如何对数组方法进行变异的 ?
+## 三、vue 是如何对数组方法进行变异的 ?
 vue源码如下
 ```javascript
 // \core\observer\array.js
@@ -125,7 +125,7 @@ methodsToPatch.forEach(function (method) {
 ```
 Vue 通过原型拦截的方式重写了数组的 7 个方法,首先获取到这个数组的ob,也就是它的 Observer 对象,如果有新的值,就调用 observeArray 对新的值进行监听,然后手动调用 notify,通知 render watcher,执行 update
 
-## 三、Vue 生命周期及父子组件生命周期钩子函数执行顺序
+## 四、Vue 生命周期及父子组件生命周期钩子函数执行顺序
 
 ### 单一组件生命周期钩子函数执行顺序
 
@@ -157,7 +157,7 @@ Vue 通过原型拦截的方式重写了数组的 7 个方法,首先获取到这
 销毁过程
 >父beforeDestroy->子beforeDestroy->子destroyed->父destroyed
 
-## 四、computed 的实现原理
+## 五、computed 的实现原理
 computed 本质是一个惰性求值的观察者。
 
 computed 内部实现了一个惰性的 watcher,也就是 computed watcher,computed watcher 不会立刻求值,同时持有一个 dep 实例。
@@ -172,7 +172,7 @@ computed watcher 通过 this.dep.subs.length 判断有没有订阅者,
 
 没有的话,仅仅把 this.dirty = true。 **(当计算属性依赖于其他数据时，属性并不会立即重新计算，只有之后其他地方需要读取属性的时候，它才会真正计算，即具备 lazy（懒计算）特性。)**
 
-## 五、computed 和 watch 有什么区别及运用场景?
+## 六、computed 和 watch 有什么区别及运用场景?
 ### 区别
 - computed 计算属性 : 依赖其它属性值,并且 computed 的值有缓存,只有它依赖的属性值发生改变,下一次获取 computed 的值时才会重新计算 computed 的值。
 
@@ -184,7 +184,7 @@ computed watcher 通过 this.dep.subs.length 判断有没有订阅者,
 
 当我们需要在数据变化时执行异步或开销较大的操作时,应该使用 watch,使用 watch 选项允许我们执行异步操作 ( 访问一个 API ),限制我们执行该操作的频率,并在我们得到最终结果前,设置中间状态。这些都是计算属性无法做到的。
 
-## 六、Vue 中 key 的作用是什么 
+## 七、Vue 中 key 的作用是什么 
 
 key 是每个 vnode 的唯一 id,依靠 key,我们的diff操作可以更准确、更快速（对于简单列表页渲染来说 diff 节点也更快,但会产生一些隐藏的副作用,比如可能不会产生过渡效果,或者在某些节点有绑定数据（表单）状态，会出现状态错位。）
 
@@ -207,3 +207,9 @@ function createKeyToOldIdx (children, beginIdx, endIdx) {
 }
 ```
 
+## 八、Vue 组件 data 为什么必须是函数？
+> new Vue()实例中，data 可以直接是一个对象，为什么在 vue 组件中 data 必须是个函数呢？
+
+应为组件是可以复用的, JS 里对象是引用关系，如果组件 data 是一个对象，那么子组件中的 data 属性会相互污染。
+
+所以一个组件的 data 选项必须是一个函数，因此每个组件实例可以维护一份被返回对象的独立的拷贝。new Vue() 的实例是不会被复用的，所以不存在以上问题
