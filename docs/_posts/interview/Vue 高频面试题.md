@@ -213,3 +213,84 @@ function createKeyToOldIdx (children, beginIdx, endIdx) {
 应为组件是可以复用的, JS 里对象是引用关系，如果组件 data 是一个对象，那么子组件中的 data 属性会相互污染。
 
 所以一个组件的 data 选项必须是一个函数，因此每个组件实例可以维护一份被返回对象的独立的拷贝。new Vue() 的实例是不会被复用的，所以不存在以上问题
+
+## 九、nextTick 的原理
+> 官方文档：
+> 在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
+
+Vue 在更新 DOM 时是异步执行的。只要侦听到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据变更。
+
+如果同一个 watcher 被多次触发，只会被推入到队列中一次。这种在缓冲时去除重复数据对于避免不必要的计算和 DOM 操作是非常重要的。
+
+然后，在下一个的事件循环“tick”中，Vue 刷新队列并执行实际 (已去重的) 工作。
+
+Vue 在内部对异步队列尝试使用原生的 Promise.then、MutationObserver 和 setImmediate，如果执行环境不支持，则会采用 setTimeout(fn, 0) 代替。
+**在 vue2.5 的源码中，macrotask 降级的方案依次是：setImmediate、MessageChannel、setTimeout**
+
+vue 的 nextTick 方法的实现原理:
+
+- vue 用异步队列的方式来控制 DOM 更新和 nextTick 回调先后执行
+- microtask 因为其高优先级特性，能确保队列中的微任务在一次事件循环前被执行完毕
+- 考虑兼容问题,vue 做了 microtask 向 macrotask 的降级方案
+
+## 十、vm.$set()实现原理是什么?
+受现代 JavaScript 的限制 (而且 Object.observe 也已经被废弃)，Vue 无法检测到对象属性的添加或删除。
+
+由于 Vue 会在初始化实例时对属性执行 getter/setter 转化，所以属性必须在 data 对象上存在才能让 Vue 将它转换为响应式的。
+
+对于已经创建的实例，Vue 不允许动态添加根级别的响应式属性。但是，可以使用 Vue.set(object, propertyName, value) 方法向嵌套对象添加响应式属性。
+
+那么 Vue 内部是如何解决对象新增属性不能响应的问题的呢?
+源码如下：
+``` typescript
+// src\core\observer\index.js
+/**
+ * Set a property on an object. Adds the new property and
+ * triggers change notification if the property doesn't
+ * already exist.
+ */
+export function set (target: Array<any> | Object, key: any, val: any): any {
+  if (process.env.NODE_ENV !== 'production' &&
+    (isUndef(target) || isPrimitive(target))
+  ) {
+    warn(`Cannot set reactive property on undefined, null, or primitive value: ${(target: any)}`)
+  }
+  // target 为数组
+  if (Array.isArray(target) && isValidArrayIndex(key)) {
+    // 修改数组的长度, 避免索引>数组长度导致splice()执行有误
+    target.length = Math.max(target.length, key)
+    // 利用数组的splice变异方法触发响应式
+    target.splice(key, 1, val)
+    return val
+  }  
+  // target为对象, key在target或者target.prototype上 且必须不能在 Object.prototype 上,直接赋值
+  if (key in target && !(key in Object.prototype)) {
+    target[key] = val
+    return val
+  } 
+  // 以上都不成立, 即开始给target创建一个全新的属性
+  // 获取Observer实例
+  const ob = (target: any).__ob__
+  if (target._isVue || (ob && ob.vmCount)) {
+    process.env.NODE_ENV !== 'production' && warn(
+      'Avoid adding reactive properties to a Vue instance or its root $data ' +
+      'at runtime - declare it upfront in the data option.'
+    )
+    return val
+  }
+  // target 本身就不是响应式数据, 直接赋值
+  if (!ob) {
+    target[key] = val
+    return val
+  }
+   // 进行响应式处理
+  defineReactive(ob.value, key, val)
+  ob.dep.notify()
+  return val
+}
+```
+过程：
+- 如果目标是数组,使用 vue 实现的变异方法 splice 实现响应式
+- 如果目标是对象,判断属性存在,即为响应式,直接赋值
+- 如果 target 本身就不是响应式,直接赋值
+- 如果属性不是响应式,则调用 defineReactive 方法进行响应式处理
