@@ -1,3 +1,13 @@
+---
+title: WebGL入门 -- 认识WebGL
+date: 2022-03-20 18:56:19
+permalink: /pages/489ccc/
+sidebar: auto
+categories:
+  - 技术 
+tags:
+  - WebGL
+---
 
 
 > 认识 WebGL
