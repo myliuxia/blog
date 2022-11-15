@@ -13,7 +13,7 @@ permalink: /pages/49fb28/
 <!-- more -->
 ## 变量和类型
 
-### JavaScript规定了几种数据类型
+### 1、JavaScript规定了几种数据类型
 目前JS数据类型总共有8种: **Number**、**String**、**Boolean**、**Object**、**null**、**undefined**、**Symbol**、**BigInt**
 
 其中 `Symbol` 是`ES6`新增的一种数据类型。
@@ -21,7 +21,7 @@ permalink: /pages/49fb28/
 `BigInt`则是谷歌67版本中还出现了一种数据类型，是指安全存储、操作大整数。
 
 
-### `JavaScript` 对象的底层数据结构是什么
+### 2、JavaScript 对象的底层数据结构是什么
 #### 先介绍下语言中所有的底层存储方式
 - 数组（Array）
   `数组`是一种聚合数据类型，它是将具有相同类型的若干变量有序的组织在一起的集合。数组可以说是最基础的数据结构，在各种编程语言中都有对应。一个数组可以分解为多个数组元数，按照数据元素的类型，数组可以分为整型数组、字符型数组、浮点型数组、指针数组和结构数组等。数组也可以有一维、二维和多维等表现形式。
@@ -52,17 +52,64 @@ permalink: /pages/49fb28/
 
 `JavaScript引用类型数据`被存储于堆中（如`对象`、`数组`、`函数`等。它们是通过拷贝和`new`出来的）。但说是存储在堆中也不太准确，因为引用类型的数据的地址指针是存储于栈中的，当我们想要访问应用类型值的时候，需要先从栈中获得对象的地址指针，然后通过指针找到堆中所需的数据。
 
-### `Symbol`类型在实际开发中的应用、可手动实现一个简单的`Symbol`
+### 3、`Symbol`类型在实际开发中的应用、可手动实现一个简单的`Symbol`
+`Symbol`是`ES6`新出的一种数据类型，可以简单理解为唯一的量，独一无二的值。在实际开发中我们主要在一下地方应用：
+- 作为对象的key属性，防止对象属性被从写
+- Symbol类型可以用住私有变量
+  ```javascript
+  const name = Symbol('name')
+  class People {
+    construct(n){
+      this[name] = n
+    }
+    sayName(){
+      console.log(this[name])
+    }
+  }
+  ```
+  使用闭包主要是保护这个Symbol，它无法直接在闭包外面访问。这样除了使用`Object.getOwnpropertySymbols（）`之外我们无法访问`this[name]`属性，基本可以认为是私有的。
 
-### `JavaScript`中的变量在内存中的具体存储形式
+- 定义一组常量，保证这组常量的值都是不相等的
+  ```javascript
+  const COLOR_RED = Symbol();
+  const COLOR_GREEN = Symbol();
+  function getComplement(color){
+    switch (color){
+      case COLOR_RED:
+        return 'red';
+      case COLOR_GREEN:
+        return 'green'
+      default:
+        throw new Error('Undefined color')
+    }
+  }
+  ```
+  常量使用 Symbol 值最大的好处，就是其他任何值都不可能有相同的值了，因此可以保证上面的switch语句会按设计的方式工作。
 
-### 基本类型对应的内置对象，以及他们之间的装箱拆箱操作
+### 4、基本类型对应的内置对象，以及他们之间的装箱拆箱操作
 
 ### 理解值类型和引用类型
 
 ### `null` 和 `undefined` 的区别
+`null`表示为空，代表此处不应该有值的存在，一个对象可以是null,代表是个空对象，而null本生也是对象。
+
+```javascript
+null instanceof Object // false
+
+typeof null // 'object'
+```
+
+`undefined` 表示【不存在】，JavaScript 是一门动态类型语言，成员除了表示存在的空值外，还有可能根本就不存在（因为存不存在只有在运行时才知道），这就是`undefined`存在的意义。
 
 ### 至少可以说出三种判断`JavaScript`数据类型的方式，以及他们的优缺点，如何准确的判断数组类型
+
+- instanceof
+  判断对象和构造函数在原型链上是否有关系，如果有关系，返回真，否则返回假
+- typeof
+  可以对基本类型做出准确的判断，但对于引用类型，用它就有点力不从心了。
+  typeof 返回一个表示数据类型的字符串，返回结果包括：number、boolean、string、object、undefined、function等6种数据类型
+  注意：typeof  null会返回object，因为特殊值null被认为是一个空的对象引用
+- Object.prototype.toString().call()
 
 ### 可能发生隐式类型转换的场景以及转换原则，应如何避免或巧妙应用
 
