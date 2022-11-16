@@ -88,9 +88,7 @@ permalink: /pages/49fb28/
 
 ### 4、基本类型对应的内置对象，以及他们之间的装箱拆箱操作
 
-### 理解值类型和引用类型
-
-### `null` 和 `undefined` 的区别
+### 5、`null` 和 `undefined` 的区别
 `null`表示为空，代表此处不应该有值的存在，一个对象可以是null,代表是个空对象，而null本生也是对象。
 
 ```javascript
@@ -101,19 +99,157 @@ typeof null // 'object'
 
 `undefined` 表示【不存在】，JavaScript 是一门动态类型语言，成员除了表示存在的空值外，还有可能根本就不存在（因为存不存在只有在运行时才知道），这就是`undefined`存在的意义。
 
-### 至少可以说出三种判断`JavaScript`数据类型的方式，以及他们的优缺点，如何准确的判断数组类型
+### 6、至少可以说出三种判断`JavaScript`数据类型的方式，以及他们的优缺点，如何准确的判断数组类型
 
 - instanceof
-  判断对象和构造函数在原型链上是否有关系，如果有关系，返回真，否则返回假
+  判断对象和构造函数在原型链上是否有关系，如果有关系，返回真，否则返回假。故其对于引用类型的类型检测支持很好，但是无法对基本类型数据进行类型检测。
+  ```javascript
+  console.log({} instanceof Object) // true
+  console.log([] instanceof Array) // true
+  console.log(new Date() instanceof Date) // true
+  console.log(function(){} instanceof Function) // true
+  console.log(function(){} instanceof Object) // true
+  console.log('123' instanceof String) // true
+  ```
+
 - typeof
   可以对基本类型做出准确的判断，但对于引用类型，用它就有点力不从心了。
   typeof 返回一个表示数据类型的字符串，返回结果包括：number、boolean、string、object、undefined、function等6种数据类型
   注意：typeof  null会返回object，因为特殊值null被认为是一个空的对象引用
+  ```javascript
+  console.log(typeof 1) // number
+  console.log(typeof '1') // string
+  console.log(typeof true) // boolean
+  console.log(typeof null) // object
+  console.log(typeof undefined) // undefined
+  console.log(typeof []) // object
+  console.log(typeof {}) // object
+  console.log(typeof Symbol()) // symbol
+  ```
 - Object.prototype.toString().call()
+  对于基本类型和引用类型都可以判断（除了自定义的类）
+  ```javascript
+  // 基本数据类型
+  Object.prototype.toString.call(1) == '[Object Number]' // true
+  Object.prototype.toString.call(new Number(1)) == '[Object Number]' // true
 
-### 可能发生隐式类型转换的场景以及转换原则，应如何避免或巧妙应用
+  // 对象
+  Object.prototype.toString.call({}) == '[Object Object]' // true
+  function abc(){}
+  Object.prototype.toString.call(new abd()) == '[Object Object]' // true
+  // 数组
+  Object.prototype.toString.call([]) == '[Object Array]' // true
+  // 函数
+  Object.prototype.toString.call(function(){}) == '[Object Function]' // true
 
-### 出现小数精度丢失的原因，`JavaScript`可以存储的最大数字、最大安全数字，`JavaScript`处理大数字的方法、避免精度丢失的方法
+  ```
+### 7、可能发生隐式类型转换的场景以及转换原则，应如何避免或巧妙应用
+  一般发生隐式类型转换存在两种场景中：
+  - 数学运算符
+  - 逻辑语句中
+#### 数学运算符
+**减、乘、除**：在对各种`非Number`类型运用数学运算符（- * /）时，会先将`非Number`类型转换为`Number`类型。例如：
+```javascript
+1 - true // 0，先将 true 转换为数字 1，再执行 1 - 1
+1 - null // 1，先将 null 转换为数字 0，再执行 1 - 0
+1 - undefined  // NaN，undefined 转换为数字是 NaN
+1 * ['5'] // 5，['5']首先会变成'5',然后再变成数字 5
+```
+其中如最后一个例子这样的，遇到引用类型的隐式转换会先掉用valueOf(),然后再调用toString()进行转换
+
+
+**加**：它比较特殊，其隐式转换规则优先级如下：
+
+  1、一侧为 String 类型时，另一侧会尽量转化成为字符串类型
+
+  2、一侧为 Number 类型时，且另一侧为基本数据类型，则另一侧会尽量转换成 Number 类型
+
+  3、一侧为 Number 类型，且另一侧为引用类型，会将它们俩都转换成 String 类型然后拼接
+
+  4、两侧都是基本类型，且都不是 String，Number。则两侧都会尽量向 Number 类型去转换
+
+  5、两侧都是引用类型，都转换成 String 类型然后拼接
+
+  
+  ```javascript
+  /*规则1*/
+  '123' + 12 // '12312'
+  '123' + [] // '123'
+
+  /*规则2*/
+  123 + true // 124
+  123 + false // 123
+  123 + null // 123
+  123 + undefined // NaN
+  123 + '123'
+
+  /*规则3*/
+  123 + [] // '123'
+  123 + [12] // '12312'
+  123 + {} // '123[object Object]'
+
+  /*规则4*/
+  true + null // 1
+  undefined + null // NaN
+
+  /*规则5*/
+  {} + [12] // '[object Object]12'
+  [] + [] // ''
+  ```
+
+  #### 逻辑语句中的类型转换
+  逻辑语句包含：if(xxx)、while(xxx)和for循环中的判断，还有就是||、&& 
+
+  **单个变量 （也就是没有 == 的时候）** 
+
+  如果只有单个变量，会先将变量转换为Boolean值。(其实逻辑运算符也是单个单个地判断变量的)
+  ```javascript
+  0 && true // false， 左边 0 优先转换为 false，然后因为是 && 所有就不用看后面的了
+  '0' && true // true, 左边 '0'优先转换为 true,然后因为是 && 继续往后看是true，所以最终结构true
+  0 || false // false, 左边 0 优先转换为 false，然后因为是 || 继续往后看是false, 所以最终结构false
+  '0' || false // true, 左边 '0'优先转换为 true,然后因为是 || 所有就不用看后面的了
+  ```
+  **使用 == 比较 （===不会存在类型转换）**
+
+  1、NaN和其他任何类型比较永远返回 false（包括和他自己）
+
+  2、Boolean 和其他任何类型比较，Boolean 首先被转换为 Number 类型。
+
+  3、String和Number比较，先将String转换为Number类型。
+
+  4、null == undefined比较结果是true，除此之外，null、undefined和其他任何结果的比较值都为false。
+
+  5、基本类型和引用类型做比较时，引用类型会依照ToPrimitive规则转换为基本类型（调用先valueOf然后调用toString）。如果还是没法得到一个基本类型，就会抛出 TypeError。
+
+  ```javascript
+  /**规则1**/
+  NaN == NaN // false
+
+  /**规则2**/
+  true == 1  // true 
+  true == '2'  // false, 先把 true 变成 1，而不是把 '2' 变成 true
+  true == ['1']  // true, 先把 true 变成 1， ['1']拆箱成 '1', 再参考规则3
+  true == ['2']  // false, 同上
+  undefined == false // false ，首先 false 变成 0，然后参考规则4
+  null == false // false，同上
+
+  /**规则3**/
+  123 == '123' // true, '123' 会先变成 123
+  '' == 0 // true, ''" 会首先变成 0
+
+  /**规则4**/
+  null == 0 //false, 虽然null有些时候会隐式转换成 0. 但这里是不相等的！
+  null == undefined //true
+  undefined == false // false
+  undefined == false // false
+
+  /**规则5**/
+  '[object Object]' == {a: 1}  // true, 对象和字符串比较，对象通过 toString 得到一个基本类型值
+  '1,3' == [1, 3]  // true ，同上
+  ```
+
+
+### 8、出现小数精度丢失的原因，`JavaScript`可以存储的最大数字、最大安全数字，`JavaScript`处理大数字的方法、避免精度丢失的方法
 
 
 
