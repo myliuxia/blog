@@ -11,9 +11,9 @@ permalink: /pages/49fb28/
 
 > 总结前端工程师需要掌握的Javascript基础知识点
 <!-- more -->
-## 变量和类型
+# 变量和类型
 
-### 1、JavaScript规定了几种数据类型
+## 1、JavaScript规定了几种数据类型
 目前JS数据类型总共有8种: **Number**、**String**、**Boolean**、**Object**、**null**、**undefined**、**Symbol**、**BigInt**
 
 其中 `Symbol` 是`ES6`新增的一种数据类型。
@@ -21,8 +21,8 @@ permalink: /pages/49fb28/
 `BigInt`则是谷歌67版本中还出现了一种数据类型，是指安全存储、操作大整数。
 
 
-### 2、JavaScript 对象的底层数据结构是什么
-#### 先介绍下语言中所有的底层存储方式
+## 2、JavaScript 对象的底层数据结构是什么
+### 先介绍下语言中所有的底层存储方式
 - 数组（Array）
   `数组`是一种聚合数据类型，它是将具有相同类型的若干变量有序的组织在一起的集合。数组可以说是最基础的数据结构，在各种编程语言中都有对应。一个数组可以分解为多个数组元数，按照数据元素的类型，数组可以分为整型数组、字符型数组、浮点型数组、指针数组和结构数组等。数组也可以有一维、二维和多维等表现形式。
 
@@ -47,12 +47,12 @@ permalink: /pages/49fb28/
 - 散列表（Hash）
   散列表源于`散列函数`（Hash Function），其思想是如果在结构中存在关键词和T相等的记录，那么必定在F(T)的存储位置可以周到该记录，这样就可以部用进行比较操作而直接取得所有记录。
 
-#### JavaScript中使用的数据存储方式是`堆（Heap）` 和 `栈（Stack）`
+### JavaScript中使用的数据存储方式是`堆（Heap）` 和 `栈（Stack）`
 `JavaScript基本类型数据`都是直接按值存储在栈中的（`Undefined`、`Null`、不是`new`出来的`布尔`、`Number`和`String`）,每种类型的数据占用的内存空间的大小是确定的，并由系统自动分配和自动释放。这样带来的好处就是，内存可以及时得到回收，相对于堆来说，更加容易管理内存空间。
 
 `JavaScript引用类型数据`被存储于堆中（如`对象`、`数组`、`函数`等。它们是通过拷贝和`new`出来的）。但说是存储在堆中也不太准确，因为引用类型的数据的地址指针是存储于栈中的，当我们想要访问应用类型值的时候，需要先从栈中获得对象的地址指针，然后通过指针找到堆中所需的数据。
 
-### 3、`Symbol`类型在实际开发中的应用、可手动实现一个简单的`Symbol`
+## 3、`Symbol`类型在实际开发中的应用、可手动实现一个简单的`Symbol`
 `Symbol`是`ES6`新出的一种数据类型，可以简单理解为唯一的量，独一无二的值。在实际开发中我们主要在一下地方应用：
 - 作为对象的key属性，防止对象属性被从写
 - Symbol类型可以用住私有变量
@@ -86,9 +86,62 @@ permalink: /pages/49fb28/
   ```
   常量使用 Symbol 值最大的好处，就是其他任何值都不可能有相同的值了，因此可以保证上面的switch语句会按设计的方式工作。
 
-### 4、基本类型对应的内置对象，以及他们之间的装箱拆箱操作
+## 4、基本类型对应的内置对象，以及他们之间的装箱拆箱操作
+### 内置对象：
+`Object`是 `JavaScript` 中所有对象的父对象 数据封装类对象：`Object`、`Array`、`Boolean`、`Number` 和 `String` 其他对象：`Function`、`Math`、`Date`、`RegExp`、`Error`。
 
-### 5、`null` 和 `undefined` 的区别
+特殊的基本包装类型(`String`、`Number`、`Boolean`)
+
+`arguments`: 只存在于函数内部的一个类数组对象
+
+### 装箱和拆箱
+引用类型有个特殊的基本包装类型，它包括String、Number和Boolean。
+作为字符串的a可以调用方法
+**装箱：**
+把基本数据类型转化为对应的引用数据类型的操作**，装箱分为隐式装箱和显示装箱
+
+```
+在《javascript高级程序设计》中有这样一句话：每当读取一个基本类型的时候，后台就会创建一个对应的基本包装类型对象，从而让我们能够调用一些方法来操作这些数据。(隐式装箱)
+```
+
+  隐式装箱：
+
+  ```javascript
+  let a = 'sun'
+  let b = a.indexof('s') // 返回下标
+  // 上面代码在后台实际得步骤为：
+  let a = new String('sun')
+  let b = a.indexof('s')
+  a = 0
+  ```
+
+在上面的代码中，a是基本类型，它不是对象，不应该具有方法，js内部进行了一些列处理（装箱)， 使得它能够调用方法。在这个基本类型上调用方法，其实是在这个基本类型对象上调用方法。这个基本类型的对象是临时的，它只存在于方法调用那一行代码执行的瞬间，执行方法后立刻被销毁。
+
+显示装箱:
+通过内置对象可以对Boolean、Object、String等可以对基本类型显示装箱
+
+```javascript
+let a = new String('sun')
+```
+
+**拆箱：**
+拆箱和装箱相反，就是把引用类型转化为基本类型的数据，通常通过引用类型的valueof()和toString（）方法实现
+
+```javascript
+let name =　new String('sun')
+let age = new Number(24)
+console.log(typeof name) // object
+console.log(typeof age) // object
+// 拆箱操作
+console.log(typeof age.valueOf()) // number
+console.log(typeof name.valueOf()) // string
+console.log(typeof age.toString()) // string
+console.log(typeof name.toString()) // string
+
+```
+
+
+## 5、`null` 和 `undefined` 的区别
 `null`表示为空，代表此处不应该有值的存在，一个对象可以是null,代表是个空对象，而null本生也是对象。
 
 ```javascript
@@ -99,7 +152,7 @@ typeof null // 'object'
 
 `undefined` 表示【不存在】，JavaScript 是一门动态类型语言，成员除了表示存在的空值外，还有可能根本就不存在（因为存不存在只有在运行时才知道），这就是`undefined`存在的意义。
 
-### 6、至少可以说出三种判断`JavaScript`数据类型的方式，以及他们的优缺点，如何准确的判断数组类型
+## 6、至少可以说出三种判断`JavaScript`数据类型的方式，以及他们的优缺点，如何准确的判断数组类型
 
 - instanceof
   判断对象和构造函数在原型链上是否有关系，如果有关系，返回真，否则返回假。故其对于引用类型的类型检测支持很好，但是无法对基本类型数据进行类型检测。
@@ -143,11 +196,11 @@ typeof null // 'object'
   Object.prototype.toString.call(function(){}) == '[Object Function]' // true
 
   ```
-### 7、可能发生隐式类型转换的场景以及转换原则，应如何避免或巧妙应用
+## 7、可能发生隐式类型转换的场景以及转换原则，应如何避免或巧妙应用
   一般发生隐式类型转换存在两种场景中：
   - 数学运算符
   - 逻辑语句中
-#### 数学运算符
+### 数学运算符
 **减、乘、除**：在对各种`非Number`类型运用数学运算符（- * /）时，会先将`非Number`类型转换为`Number`类型。例如：
 ```javascript
 1 - true // 0，先将 true 转换为数字 1，再执行 1 - 1
@@ -197,7 +250,7 @@ typeof null // 'object'
   [] + [] // ''
   ```
 
-  #### 逻辑语句中的类型转换
+  ### 逻辑语句中的类型转换
   逻辑语句包含：if(xxx)、while(xxx)和for循环中的判断，还有就是||、&& 
 
   **单个变量 （也就是没有 == 的时候）** 
@@ -248,7 +301,7 @@ typeof null // 'object'
   '1,3' == [1, 3]  // true ，同上
   ```
 
-### 8、出现小数精度丢失的原因，`JavaScript`可以存储的最大数字、最大安全数字，`JavaScript`处理大数字的方法、避免精度丢失的方法
+## 8、出现小数精度丢失的原因，`JavaScript`可以存储的最大数字、最大安全数字，`JavaScript`处理大数字的方法、避免精度丢失的方法
 <!-- 计算机存储双精度浮点数需要先把十进制数转换为二进制的科学记数法的形式，然后计算机以自己的规则{符号位+(指数位+指数偏移量的二进制)+小数部分}存储二进制的科学记数法，因为存储时有位数限制（64位），并且某些十进制的浮点数再转换为二进制时会出现无限循环，会造成二进制的舍入操作（0舍1入），当再次转换为十进制十就造成了计算误差。 -->
 - **出现小数精度丢失的原因：**
   
@@ -263,72 +316,100 @@ typeof null // 'object'
   JavaScript 能够准确表示的整数范围在-2^53到2^53之间（不含两个端点），超过这个范围，无法精确表示这个值。ES6 引入了Number.MAX_SAFE_INTEGER和Number.MIN_SAFE_INTEGER这两个常量，用来表示这个范围的上下限。Number.isSafeInteger()则是用来判断一个整数是否落在这个范围之内。
 
 
-## 原型和原型链
 
-### 理解原型设计模式以及`JavaScript`中的原型规则
+# 原型和原型链
 
-### `instanceof`的底层实现原理，手动实现一个`instanceof`
+## 理解原型设计模式以及`JavaScript`中的原型规则
 
-### 实现继承的几种方式以及他们的优缺点
+## `instanceof`的底层实现原理，手动实现一个`instanceof`
 
-### 至少说出一种开源项目(如`Node`)中应用原型继承的案例
+## 实现继承的几种方式以及他们的优缺点
 
-### 可以描述new一个对象的详细过程，手动实现一个new操作符
+## 至少说出一种开源项目(如`Node`)中应用原型继承的案例
 
-### 理解`es6` `class`构造以及继承的底层实现原理
+## 可以描述new一个对象的详细过程，手动实现一个new操作符
+ - 创建一个空对象
+ - 设置原型链：设置新对象的 constuctor 属性为构造函数的名称，设置新对象的__proto__属性指向构造函数的 prototype 对象
+ - 通过this将属性和方法添加到这个对象
+ - 返回值：如果无返回值或者返回一个非对象值，则将新对象返回；如果返回值是一个先对象的话那么直接返回该对象
 
+如下实现一个new方法：
+```javascript
+function NewRelize(){
+   //获取构造器 和 构造器后的参数 （数组的shift方法删除第一项，并且返回被删除的项）；删除后arguments就剩下传递的参数了
+   let Con=Array.prototype.shift.call(arguments);
+   //以构造器的prototype为原型，创建新对象
+   let newObj=Object.create(Con.prototype);
+   //将新对象和调用参数传给构造器，执行
+   let result=Con.apply(newObj,arguments);
+   //如果构造器没有手动返回对象，则返回新创建的对象
+   return typeof result=='object'?result:newObj;
+}
+```
+
+```javascript
+function Person(name,age){
+     this.name=name;
+     this.age=age;
+}
+let newj=NewRelize(Person,'zhangsan',11);
+console.log(newj.name);
+console.log(newj.age);
+
+```
+## 理解`es6` `class`构造以及继承的底层实现原理
 
 
 ## 作用域和闭包
 
-### 理解词法作用域和动态作用域
+## 理解词法作用域和动态作用域
 
-### 理解`JavaScript`的作用域和作用域链
+## 理解`JavaScript`的作用域和作用域链
 
-### 理解`JavaScript`的执行上下文栈，可以应用堆栈信息快速定位问题
+## 理解`JavaScript`的执行上下文栈，可以应用堆栈信息快速定位问题
 
-### `this` 的原理以及几种不同使用场景的取值
+## `this` 的原理以及几种不同使用场景的取值
 
-### 闭包的实现原理和作用，可以列举几个开发中闭包的实际应用
+## 闭包的实现原理和作用，可以列举几个开发中闭包的实际应用
 
-### 理解堆栈溢出和内存泄漏的原理，如何防止
+## 理解堆栈溢出和内存泄漏的原理，如何防止
 
-### 如何处理循环的异步操作
+## 如何处理循环的异步操作
 
-### 理解模块化解决的实际问题，可列举几个模块化方案并理解其中原理
+## 理解模块化解决的实际问题，可列举几个模块化方案并理解其中原理
 
 
 
-## 执行机制
+# 执行机制
 
-### 为何`try`里面放`return`，`finally`还会执行，理解其内部机制
+## 为何`try`里面放`return`，`finally`还会执行，理解其内部机制
 
-### `JavaScript`如何实现异步编程，可以详细描述`EventLoop`机制
+## `JavaScript`如何实现异步编程，可以详细描述`EventLoop`机制
 
-### 宏任务和微任务分别有哪些
+## 宏任务和微任务分别有哪些
 
-### 可以快速分析一个复杂的异步嵌套逻辑，并掌握分析方法
+## 可以快速分析一个复杂的异步嵌套逻辑，并掌握分析方法
 
-### 使用`Promise`实现串行
+## 使用`Promise`实现串行
 
-### `Node`与浏览器`EventLoop`的差异
+## `Node`与浏览器`EventLoop`的差异
 
-### 如何在保证页面运行流畅的情况下处理海量数据
+## 如何在保证页面运行流畅的情况下处理海量数据
 
 
 
 ## 语法和API
 
-### 理解`ECMAScript`和`JavaScript`的关系
+## 理解`ECMAScript`和`JavaScript`的关系
 
-### 熟练运用`es5`、`es6`提供的语法规范，
+## 熟练运用`es5`、`es6`提供的语法规范，
 
-### 熟练掌握`JavaScript`提供的全局对象（例如`Date`、`Math`）、全局函数（例如`decodeURI`、`isNaN`）、全局属性（例如`Infinity`、`undefined`）
+## 熟练掌握`JavaScript`提供的全局对象（例如`Date`、`Math`）、全局函数（例如`decodeURI`、`isNaN`）、全局属性（例如`Infinity`、`undefined`）
 
-### 熟练应用`map`、`reduce`、`filter` 等高阶函数解决问题
+## 熟练应用`map`、`reduce`、`filter` 等高阶函数解决问题
 
-### `setInterval`需要注意的点，使用`settimeout`实现`setInterval`
+## `setInterval`需要注意的点，使用`settimeout`实现`setInterval`
 
-### `JavaScript`提供的正则表达式`API`、可以使用正则表达式（邮箱校验、`URL`解析、去重等）解决常见问题
+## `JavaScript`提供的正则表达式`API`、可以使用正则表达式（邮箱校验、`URL`解析、去重等）解决常见问题
 
-### `JavaScript`异常处理的方式，统一的异常处理方案
+## `JavaScript`异常处理的方式，统一的异常处理方案
