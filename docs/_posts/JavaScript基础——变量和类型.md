@@ -1,5 +1,5 @@
 ---
-title: JavaScript 基础
+title: JavaScript基础——变量和类型
 sidebar: auto
 categories: 
   - 技术
@@ -97,6 +97,7 @@ permalink: /pages/49fb28/
 ### 装箱和拆箱
 引用类型有个特殊的基本包装类型，它包括String、Number和Boolean。
 作为字符串的a可以调用方法
+
 **装箱：**
 把基本数据类型转化为对应的引用数据类型的操作**，装箱分为隐式装箱和显示装箱
 
@@ -314,102 +315,3 @@ typeof null // 'object'
   由于内存的限制，ECMAScript并不能保存世界上所有的数值，ECMAScript能够表示的最小数值是Number.MIN_VALUE，能够表示的最大数值是Number.MAX_VALUE。超过数值是正值，则被转成Infinity（正无穷），如果是负值则被转成-Infinity（负无穷）。如果在某次返回了正或负的Infinity值，那么该值将无法继续参与下一次的计算，所以我们需要确定一个数值是不是有穷的，即是不是位于最小和最大的数值之间，可以使用isFinite()函数，如果该函数参数在最小和最大数值之间时会返回true。注意，如果参数类型不是数值，Number.isFinite一律返回false。
 
   JavaScript 能够准确表示的整数范围在-2^53到2^53之间（不含两个端点），超过这个范围，无法精确表示这个值。ES6 引入了Number.MAX_SAFE_INTEGER和Number.MIN_SAFE_INTEGER这两个常量，用来表示这个范围的上下限。Number.isSafeInteger()则是用来判断一个整数是否落在这个范围之内。
-
-
-
-# 原型和原型链
-
-## 理解原型设计模式以及`JavaScript`中的原型规则
-
-## `instanceof`的底层实现原理，手动实现一个`instanceof`
-
-## 实现继承的几种方式以及他们的优缺点
-
-## 至少说出一种开源项目(如`Node`)中应用原型继承的案例
-
-## 可以描述new一个对象的详细过程，手动实现一个new操作符
- - 创建一个空对象
- - 设置原型链：设置新对象的 constuctor 属性为构造函数的名称，设置新对象的__proto__属性指向构造函数的 prototype 对象
- - 通过this将属性和方法添加到这个对象
- - 返回值：如果无返回值或者返回一个非对象值，则将新对象返回；如果返回值是一个先对象的话那么直接返回该对象
-
-如下实现一个new方法：
-```javascript
-function NewRelize(){
-   //获取构造器 和 构造器后的参数 （数组的shift方法删除第一项，并且返回被删除的项）；删除后arguments就剩下传递的参数了
-   let Con=Array.prototype.shift.call(arguments);
-   //以构造器的prototype为原型，创建新对象
-   let newObj=Object.create(Con.prototype);
-   //将新对象和调用参数传给构造器，执行
-   let result=Con.apply(newObj,arguments);
-   //如果构造器没有手动返回对象，则返回新创建的对象
-   return typeof result=='object'?result:newObj;
-}
-```
-
-```javascript
-function Person(name,age){
-     this.name=name;
-     this.age=age;
-}
-let newj=NewRelize(Person,'zhangsan',11);
-console.log(newj.name);
-console.log(newj.age);
-
-```
-## 理解`es6` `class`构造以及继承的底层实现原理
-
-
-## 作用域和闭包
-
-## 理解词法作用域和动态作用域
-
-## 理解`JavaScript`的作用域和作用域链
-
-## 理解`JavaScript`的执行上下文栈，可以应用堆栈信息快速定位问题
-
-## `this` 的原理以及几种不同使用场景的取值
-
-## 闭包的实现原理和作用，可以列举几个开发中闭包的实际应用
-
-## 理解堆栈溢出和内存泄漏的原理，如何防止
-
-## 如何处理循环的异步操作
-
-## 理解模块化解决的实际问题，可列举几个模块化方案并理解其中原理
-
-
-
-# 执行机制
-
-## 为何`try`里面放`return`，`finally`还会执行，理解其内部机制
-
-## `JavaScript`如何实现异步编程，可以详细描述`EventLoop`机制
-
-## 宏任务和微任务分别有哪些
-
-## 可以快速分析一个复杂的异步嵌套逻辑，并掌握分析方法
-
-## 使用`Promise`实现串行
-
-## `Node`与浏览器`EventLoop`的差异
-
-## 如何在保证页面运行流畅的情况下处理海量数据
-
-
-
-## 语法和API
-
-## 理解`ECMAScript`和`JavaScript`的关系
-
-## 熟练运用`es5`、`es6`提供的语法规范，
-
-## 熟练掌握`JavaScript`提供的全局对象（例如`Date`、`Math`）、全局函数（例如`decodeURI`、`isNaN`）、全局属性（例如`Infinity`、`undefined`）
-
-## 熟练应用`map`、`reduce`、`filter` 等高阶函数解决问题
-
-## `setInterval`需要注意的点，使用`settimeout`实现`setInterval`
-
-## `JavaScript`提供的正则表达式`API`、可以使用正则表达式（邮箱校验、`URL`解析、去重等）解决常见问题
-
-## `JavaScript`异常处理的方式，统一的异常处理方案
